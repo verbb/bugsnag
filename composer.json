@@ -1,0 +1,51 @@
+{
+    "name": "superbig/craft3-bugsnag",
+    "description": "Log Craft errors/exceptions to Bugsnag.",
+    "type": "craft-plugin",
+    "version": "2.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "bugsnag"
+    ],
+    "support": {
+        "docs": "https://github.com/sjelfull/craft3-bugsnag/blob/master/README.md",
+        "issues": "https://github.com/sjelfull/craft3-bugsnag/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Superbig",
+            "homepage": "https://superbig.co"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1",
+        "bugsnag/bugsnag": "3.9.*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "superbig\\bugsnag\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Bugsnag",
+        "handle": "bugsnag",
+        "schemaVersion": "2.0.0",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/sjelfull/craft3-bugsnag/master/CHANGELOG.md",
+        "components": {
+            "bugsnagService": "superbig\\bugsnag\\services\\BugsnagService"
+        },
+        "class": "superbig\\bugsnag\\Bugsnag"
+    }
+}

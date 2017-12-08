@@ -1,0 +1,42 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Bugsnag plugin for Craft CMS 3.x
+ *
+ * Bugsnag Settings.twig
+ *
+ * @author    Superbig
+ * @copyright Copyright (c) 2017 Superbig
+ * @link      https://superbig.co
+ * @package   Bugsnag
+ * @since     2.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("superbig\\bugsnag\\assetbundles\\bugsnag\\BugsnagAsset") %}
+
+{{ forms.lightswitchField({
+    label: 'Enabled',
+    instructions: 'Enable exception logging',
+    id: 'enabled',
+    name: 'enabled',
+    on: settings['enabled']})
+}}
+
+{{ forms.textField({
+    label: 'Server API key',
+    instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.',
+    id: 'serverApiKey',
+    name: 'serverApiKey',
+    value: settings['serverApiKey']})
+}}
+
+{{ forms.textField({
+    label: 'Release stage',
+    instructions: '',
+    id: 'releaseStage',
+    name: 'releaseStage',
+    value: settings['releaseStage']})
+}}
