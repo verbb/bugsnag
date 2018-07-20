@@ -41,6 +41,8 @@ class BugsnagService extends Component
         if ( $this->isEnabled() ) {
             $this->bugsnag = Client::make($this->settings->serverApiKey);
 
+            $this->bugsnag->setReleaseStage($this->settings->releaseStage);
+            $this->bugsnag->setNotifyReleaseStages($this->settings->notifyReleaseStages);
             $this->bugsnag->registerCallback(function (/** @var Report $report */
                 $report) {
 
