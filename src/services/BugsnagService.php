@@ -54,11 +54,13 @@ class BugsnagService extends Component
 
                 if ( $user = Craft::$app->getUser() ) {
                     $identity = $user->getIdentity();
-                    $report->setUser([
-                        'id'    => $user->id,
-                        'name'  => $identity->getName(),
-                        'email' => $identity->email,
-                    ]);
+                    if ( $identity ) {
+                        $report->setUser([
+                            'id'    => $user->id,
+                            'name'  => $identity->getName(),
+                            'email' => $identity->email,
+                        ]);
+                    }
                 }
             });
         }
