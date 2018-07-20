@@ -58,7 +58,7 @@ class Bugsnag extends Plugin
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
             function (PluginEvent $event) {
-                if ( $event->plugin === $this ) {
+                if ( $event->plugin === $this && !Craft::$app->getRequest()->isConsoleRequest ) {
                     Craft::$app->response->redirect(UrlHelper::cpUrl('settings/plugins/bugsnag'))->send();
                 }
             }
