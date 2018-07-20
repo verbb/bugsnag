@@ -28,7 +28,7 @@ return [
     'enabled'             => true,
 
     // Project API key
-    'apiKey'              => '',
+    'serverApiKey'        => '',
 
     // Release stage
     'releaseStage'        => 'production',
