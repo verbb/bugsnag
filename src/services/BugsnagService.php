@@ -52,12 +52,11 @@ class BugsnagService extends Component
                     $report->setMetaData($this->settings->metaData);
                 }
 
-                if ( $user = Craft::$app->getUser() ) {
-                    $identity = $user->getIdentity();
+                if ( $user = Craft::$app->getUser()->getIdentity() ) {
                     $report->setUser([
                         'id'    => $user->id,
-                        'name'  => $identity->getName(),
-                        'email' => $identity->email,
+                        'name'  => $user->getName(),
+                        'email' => $user->email,
                     ]);
                 }
             });
