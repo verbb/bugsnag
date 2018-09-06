@@ -68,6 +68,14 @@ class Bugsnag extends Plugin
             ErrorHandler::className(),
             ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION,
             function (ExceptionEvent $event) {
+                $settings = $this->getSettings();
+
+                foreach ($settings['blacklist'] as $exception) {
+                    if ($event->exception instanceof $exception['class']) {
+                        return;
+                    }
+                }
+
                 $this->bugsnagService->handleException($event->exception);
             }
         );

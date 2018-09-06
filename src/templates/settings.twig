@@ -40,3 +40,26 @@
     name: 'releaseStage',
     value: settings['releaseStage']})
 }}
+
+{% set blacklistItems = settings['blacklist'] %}
+
+{{ forms.editableTableField({
+    label: 'Blacklist',
+    instructions: 'Disable certain types of exception',
+    id: 'blacklist',
+    name: 'blacklist',
+    cols: {
+        label: {
+            type: 'singleline',
+            heading: 'Label',
+            code: true
+        },
+        class: {
+            type: 'singleline',
+            heading: 'Class',
+            code: true
+        }
+    },
+    rows: blacklistItems
+    })
+}}

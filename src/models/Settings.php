@@ -24,6 +24,7 @@ use craft\base\Model;
  * @property string $releaseStage
  * @property array  $notifyReleaseStages
  * @property array  $filters
+ * @property array  $blacklist
  * @property array  $metaData
  */
 class Settings extends Model
@@ -55,6 +56,11 @@ class Settings extends Model
      * @var array
      */
     public $filters = [];
+
+    /**
+     * @var array
+     */
+    public $blacklist = [];
 
     /**
      * @var array
