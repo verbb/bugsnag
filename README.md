@@ -28,7 +28,7 @@ Bugsnag's cross platform error monitoring automatically detects crashes in your 
 
 ## Configuring Bugsnag
 
-1. Copy the config.php configuration file into your `craft/config` folder.
+1. Copy the config.php configuration file into your `craft/config` folder as **bugsnag.php**.
 2. Update `serverApiKey` with a API key from your Bugsnag project.
 3. (Optionally) Set the `releaseStage` configuration setting to something. Defaults to `production`.
 
