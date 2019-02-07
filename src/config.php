@@ -33,6 +33,9 @@ return [
     // Release stage
     'releaseStage'        => 'production',
 
+    // App version
+    'appVersion'          => '',
+
     // Release stages to log exceptions in
     'notifyReleaseStages' => [ 'production' ],
 

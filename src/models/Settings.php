@@ -48,6 +48,11 @@ class Settings extends Model
     public $releaseStage = 'production';
 
     /**
+     * @var string
+     */
+    public $appVersion = '';
+
+    /**
      * @var array
      */
     public $notifyReleaseStages = [ 'production' ];
