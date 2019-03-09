@@ -45,4 +45,6 @@ return [
     // Metadata to send with every request
     'metaData'            => [],
 
+    // Blacklist certain exception types like 404s
+    'blacklist'            => [],
 ];

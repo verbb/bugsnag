@@ -55,7 +55,7 @@ class Settings extends Model
     /**
      * @var array
      */
-    public $notifyReleaseStages = [ 'production' ];
+    public $notifyReleaseStages = ['production'];
 
     /**
      * @var array
@@ -75,13 +75,42 @@ class Settings extends Model
     // Public Methods
     // =========================================================================
 
+    public function getBlacklist()
+    {
+        $blacklist = array_map(function($row) {
+            if (isset($row['class']) && \is_callable($row['class'])) {
+                $row['class'] = 'Advanced check set through config file';
+            }
+
+            return $row;
+        }, $this->blacklist);
+
+        return array_filter($blacklist);
+    }
+
+    public function isValidException($exception): bool
+    {
+        /**
+         * @var \yii\web\NotFoundHttpException $exception
+         */
+        $isValid = true;
+
+        foreach ($this->blacklist as $config) {
+            if (isset($config['class']) && \is_callable($config['class'])) {
+                $isValid = $config['class']($exception);
+            }
+        }
+
+        return $isValid;
+    }
+
     /**
      * @inheritdoc
      */
-    public function rules ()
+    public function rules()
     {
         return [
-            [ [ 'serverApiKey' ], 'required' ],
+            [['serverApiKey'], 'required'],
             //[ 'someAttribute', 'string' ],
             //[ 'someAttribute', 'default', 'value' => 'Some Default' ],
         ];

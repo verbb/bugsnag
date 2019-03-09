@@ -41,11 +41,11 @@
     value: settings['releaseStage']})
 }}
 
-{% set blacklistItems = settings['blacklist'] %}
+{% set blacklistItems = settings.getBlacklist() %}
 
 {{ forms.editableTableField({
     label: 'Blacklist',
-    instructions: 'Disable certain types of exception',
+    instructions: 'Disable certain types of exceptions. Class have to be fully namespaced. (i.e. \\yii\\web\\NotFoundHttpException)',
     id: 'blacklist',
     name: 'blacklist',
     cols: {
@@ -61,5 +61,5 @@
         }
     },
     rows: blacklistItems
-    })
+})
 }}

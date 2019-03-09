@@ -32,6 +32,32 @@ Bugsnag's cross platform error monitoring automatically detects crashes in your 
 2. Update `serverApiKey` with a API key from your Bugsnag project.
 3. (Optionally) Set the `releaseStage` configuration setting to something. Defaults to `production`.
 
+### Blacklisting exceptions
+
+If you want to ignore a certain type of exception, like a 
+
+```php
+<?php
+return [
+  'blacklist' => [
+          [
+              'label' => '404 errors etc',
+              'class' => function($exception) {
+                  /**
+                   * @var \yii\web\NotFoundHttpException $exception
+                   */
+  
+                  if ($exception instanceof \yii\web\NotFoundHttpException && $exception->getCode() === 404) {
+                      return false;
+                  }
+  
+                  return true;
+              },
+          ],
+      ],  
+];
+```
+
 ## Using Bugsnag
 
 It will automatically log most exceptions/errors. If you want to log a exceptions/error from an custom plugin, you may use the service methods:
