@@ -34,7 +34,7 @@ Bugsnag's cross platform error monitoring automatically detects crashes in your 
 
 ### Blacklisting exceptions
 
-If you want to ignore a certain type of exception, like a 
+If you want to ignore a certain type of exception, like a 404-error, you can do it like this: 
 
 ```php
 <?php
@@ -46,8 +46,7 @@ return [
                   /**
                    * @var \yii\web\NotFoundHttpException $exception
                    */
-  
-                  if ($exception instanceof \yii\web\NotFoundHttpException && $exception->getCode() === 404) {
+                  if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
                       return false;
                   }
   

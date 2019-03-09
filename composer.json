@@ -2,7 +2,7 @@
     "name": "superbig/craft3-bugsnag",
     "description": "Log Craft errors/exceptions to Bugsnag.",
     "type": "craft-plugin",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "keywords": [
         "craft",
         "cms",
@@ -22,8 +22,8 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1",
-        "bugsnag/bugsnag": "3.9.*"
+        "craftcms/cms": "^3.0.0",
+        "bugsnag/bugsnag": "^3.16.*"
     },
     "repositories": [
         {

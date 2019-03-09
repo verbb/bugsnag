@@ -60,7 +60,7 @@ class Settings extends Model
     /**
      * @var array
      */
-    public $filters = [];
+    public $filters = ['password'];
 
     /**
      * @var array

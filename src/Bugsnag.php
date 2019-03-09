@@ -70,9 +70,19 @@ class Bugsnag extends Plugin
             function (ExceptionEvent $event) {
                 $settings = $this->getSettings();
 
-                foreach ($settings['blacklist'] as $exception) {
-                    if ($event->exception instanceof $exception['class']) {
-                        return;
+                foreach ($settings->blacklist as $config) {
+                    if (isset($config['class'])) {
+                        if (is_callable($config['class'])) {
+                            $result = $config['class']($event->exception);
+                            if (!$result) {
+                                return;
+                            }
+                        }
+                        else {
+                            if ($event->exception instanceof $config['class']) {
+                                return;
+                            }
+                        }
                     }
                 }
 

@@ -23,7 +23,6 @@
  */
 
 return [
-
     // Enable exception logging
     'enabled'             => true,
 

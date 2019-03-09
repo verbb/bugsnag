@@ -47,8 +47,8 @@ class BugsnagService extends Component
             $this->bugsnag->registerCallback(function (/** @var Report $report */
                 $report) {
 
-                if ( !empty($this->settings->filt) ) {
-                    $report->setMetaData($this->settings->metaData);
+                if ( !empty($this->settings->filters) ) {
+                    $report->setFilters($this->settings->filters);
                 }
 
                 if ( !empty($this->settings->metaData) ) {
