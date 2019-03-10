@@ -23,7 +23,7 @@
     ],
     "require": {
         "craftcms/cms": "^3.0.0",
-        "bugsnag/bugsnag": "^3.16.*"
+        "bugsnag/bugsnag": "^3.16.0"
     },
     "repositories": [
         {
