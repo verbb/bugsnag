@@ -44,12 +44,13 @@ class BugsnagService extends Component
             $this->bugsnag->setReleaseStage($this->settings->releaseStage);
             $this->bugsnag->setAppVersion($this->settings->appVersion);
             $this->bugsnag->setNotifyReleaseStages($this->settings->notifyReleaseStages);
+
+            if ( !empty($this->settings->filters) ) {
+                $this->bugsnag->setFilters($this->settings->filters);
+            }
+
             $this->bugsnag->registerCallback(function (/** @var Report $report */
                 $report) {
-
-                if ( !empty($this->settings->filters) ) {
-                    $report->setFilters($this->settings->filters);
-                }
 
                 if ( !empty($this->settings->metaData) ) {
                     $report->setMetaData($this->settings->metaData);
