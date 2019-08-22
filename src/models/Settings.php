@@ -77,6 +77,10 @@ class Settings extends Model
 
     public function getBlacklist()
     {
+        if (!is_array($this->blacklist)) {
+            return [];
+        }
+
         $blacklist = array_map(function($row) {
             if (isset($row['class']) && \is_callable($row['class'])) {
                 $row['class'] = 'Advanced check set through config file';
