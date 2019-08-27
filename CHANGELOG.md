@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.5] - 2019-08-27
+
+### Added
+- Added asset bundle to capture JS errors in a more seamless fashion
+
+### Changed
+- The plugin can now capture early initialization errors (if manually setup in `app.php`)
+
+### Fixed
+- Fixed errorr when no items was added to exceptions blacklist
+
 ## [2.0.4] - 2019-03-14
 
 ### Fixed
