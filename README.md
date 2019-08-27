@@ -32,7 +32,7 @@ Bugsnag's cross platform error monitoring automatically detects crashes in your 
 2. Update `serverApiKey` with a API key from your Bugsnag project.
 3. (Optionally) Set the `releaseStage` configuration setting to something. Defaults to `production`.
 
-If you want to be able to capture early initialization errors, you need to add this plugin to your project's bootstrap configuration. To do this, in `config/app.php`, add:
+If you want to be able to capture early initialization errors, you need to add this plugin to your project's bootstrap configuration. To do this, in `config/app.php`, add the following:
 
 'bootstrap' => [
     '\superbig\bugsnag\Bootstrap',
@@ -69,8 +69,8 @@ It will automatically log most exceptions/errors. If you want to log a exception
 
 - For exceptions: `Bugsnag::$plugin->bugsnagService->handleException($exception);`
 
-## Javascript errors
-You can log Javascript errors on your site, but including the following in your Twig templates:
+## JavaScript errors
+You can log JavaScript errors on your site, by including the following in your Twig templates:
 
 ```twig
 {% do view.registerAssetBundle('superbig\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
