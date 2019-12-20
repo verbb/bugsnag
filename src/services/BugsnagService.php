@@ -84,13 +84,10 @@ class BugsnagService extends Component
         $this->bugsnag->leaveBreadcrumb($text, $type, $metaData);
     }
 
-    /*
-     * @return mixed
-     */
     /**
      * @param $exception
      *
-     * @return bool
+     * @return bool | void
      */
     public function handleException ($exception)
     {
@@ -99,6 +96,14 @@ class BugsnagService extends Component
         }
 
         $this->bugsnag->notifyException($exception);
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient () : Client
+    {
+        return $this->bugsnag;
     }
 
     public function isEnabled ()
