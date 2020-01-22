@@ -26,8 +26,11 @@ return [
     // Enable exception logging
     'enabled'             => true,
 
-    // Project API key
+    // Project Server API key
     'serverApiKey'        => '',
+
+    // Project Browser API key
+    'browserApiKey'        => '',
 
     // Release stage
     'releaseStage'        => 'production',

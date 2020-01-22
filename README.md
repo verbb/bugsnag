@@ -76,4 +76,6 @@ You can log JavaScript errors on your site, by including the following in your T
 {% do view.registerAssetBundle('superbig\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
 ```
 
+You also need to set the `browserApiKey` setting.
+
 Brought to you by [Superbig](https://superbig.co)

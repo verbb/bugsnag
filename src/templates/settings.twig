@@ -34,6 +34,14 @@
 }}
 
 {{ forms.textField({
+    label: 'Browser API key',
+    instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.',
+    id: 'browserApiKey',
+    name: 'browserApiKey',
+    value: settings['browserApiKey']})
+}}
+
+{{ forms.textField({
     label: 'Release stage',
     instructions: '',
     id: 'releaseStage',

@@ -10,6 +10,7 @@
 
 namespace superbig\bugsnag\models;
 
+use craft\behaviors\EnvAttributeParserBehavior;
 use superbig\bugsnag\Bugsnag;
 
 use Craft;
@@ -20,57 +21,29 @@ use craft\base\Model;
  * @package   Bugsnag
  * @since     2.0.0
  *
- * @property string $apiKey
- * @property string $releaseStage
- * @property array  $notifyReleaseStages
- * @property array  $filters
- * @property array  $blacklist
- * @property array  $metaData
+ * @property boolean $enabled
+ * @property string  $browserApiKey
+ * @property string  $serverApiKey
+ * @property string  $releaseStage
+ * @property array   $notifyReleaseStages
+ * @property array   $filters
+ * @property array   $blacklist
+ * @property array   $metaData
  */
 class Settings extends Model
 {
     // Public Properties
     // =========================================================================
 
-    /**
-     * @var boolean
-     */
-    public $enabled = true;
-
-    /**
-     * @var string
-     */
-    public $serverApiKey = '';
-
-    /**
-     * @var string
-     */
-    public $releaseStage = 'production';
-
-    /**
-     * @var string
-     */
-    public $appVersion = '';
-
-    /**
-     * @var array
-     */
+    public $enabled             = true;
+    public $serverApiKey        = '';
+    public $browserApiKey       = '';
+    public $releaseStage        = 'production';
+    public $appVersion          = '';
     public $notifyReleaseStages = ['production'];
-
-    /**
-     * @var array
-     */
-    public $filters = ['password'];
-
-    /**
-     * @var array
-     */
-    public $blacklist = [];
-
-    /**
-     * @var array
-     */
-    public $metaData = [];
+    public $filters             = ['password'];
+    public $blacklist           = [];
+    public $metaData            = [];
 
     // Public Methods
     // =========================================================================
@@ -111,6 +84,19 @@ class Settings extends Model
     /**
      * @inheritdoc
      */
+    public function behaviors(): array
+    {
+        return [
+            'parser' => [
+                'class'      => EnvAttributeParserBehavior::class,
+                'attributes' => ['serverApiKey'],
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -118,5 +104,25 @@ class Settings extends Model
             //[ 'someAttribute', 'string' ],
             //[ 'someAttribute', 'default', 'value' => 'Some Default' ],
         ];
+    }
+
+    public function getServerApiKey()
+    {
+        return $this->parseValue($this->serverApiKey);
+    }
+
+    public function getBrowserApiKey()
+    {
+        return $this->parseValue($this->browserApiKey);
+    }
+
+    public function getReleaseStage()
+    {
+        return $this->parseValue($this->releaseStage);
+    }
+
+    private function parseValue($value)
+    {
+        return Craft::parseEnv($value);
     }
 }

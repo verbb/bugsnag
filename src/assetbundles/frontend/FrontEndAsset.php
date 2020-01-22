@@ -34,38 +34,39 @@ class FrontEndAsset extends AssetBundle
     {
         $settings = Bugsnag::$plugin->getSettings();
 
-        if (!$settings->enabled) {
+        if (!$settings->enabled || empty($settings->getBrowserApiKey())) {
             return;
         }
 
-        $filePath = '//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js';
+        $filePath = 'https://d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js';
 
         $this->js[] = [
-            $filePath, 
-            'data-apikey' => $settings->serverApiKey,
-            'data-releasestage' => $settings->releaseStage,
+            $filePath,
             'position' => View::POS_HEAD,
         ];
 
         // Include this wrapper since bugsnag.js might be blocked by adblockers.  We don't want to completely die if so.
-        $js = 'var Bugsnag = Bugsnag || {};';
+        $jsSettings = [
+            'apiKey'       => $settings->getBrowserApiKey(),
+            'releaseStage' => $settings->getReleaseStage(),
+        ];
 
-        if (!Craft::$app->user->isGuest) {
-            $currentUser = Craft::$app->user->identity;
+        if (!empty($settings->notifyReleaseStages)) {
+            $jsSettings['notifyReleaseStages'] = $settings->notifyReleaseStages;
+        }
 
-            $userInfo = Json::htmlEncode([
-                'id' => $currentUser->id,
-                'name' => $currentUser->fullName,
+        $encodedSettings = Json::encode($jsSettings);
+        $js              = "var bugsnag = bugsnag || function() { console.log(arguments) }; window.bugsnagClient = bugsnag({$encodedSettings});";
+
+        if (!Craft::$app->getUser()->getIsGuest()) {
+            $currentUser = Craft::$app->getUser()->getIdentity();
+            $userInfo    = Json::htmlEncode([
+                'id'    => $currentUser->id,
+                'name'  => $currentUser->fullName,
                 'email' => $currentUser->email,
             ]);
 
-            $js .= "Bugsnag.user = $userInfo;";
-        }
-
-        if (!empty($settings->notifyReleaseStages)) {
-            $releaseStages = Json::htmlEncode($settings->notifyReleaseStages);
-
-            $js .= "Bugsnag.notifyReleaseStages = $releaseStages;";
+            $js .= "window.bugsnagClient.user = $userInfo;";
         }
 
         Craft::$app->view->registerJs($js, View::POS_BEGIN);
