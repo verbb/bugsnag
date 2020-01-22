@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Added
+- Added `getClient` method to service. This exposes the client to other plugins / modules.
+
 ## [2.0.5] - 2019-08-27
 
 ### Added
@@ -13,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - The plugin can now capture early initialization errors (if manually setup in `app.php`)
 
 ### Fixed
-- Fixed errorr when no items was added to exceptions blacklist
+- Fixed error when no items was added to exceptions blacklist
 
 ## [2.0.4] - 2019-03-14
 
