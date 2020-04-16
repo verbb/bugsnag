@@ -13,11 +13,13 @@ namespace superbig\bugsnag\services;
 use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\Client;
 use Bugsnag\Report;
+use craft\helpers\ArrayHelper;
 use superbig\bugsnag\Bugsnag;
 
 use Craft;
 use craft\base\Component;
 use craft\elements\User;
+use superbig\bugsnag\models\Settings;
 
 /**
  * @author    Superbig
@@ -29,10 +31,13 @@ class BugsnagService extends Component
     // Public Methods
     // =========================================================================
 
+    /** @var Settings */
     private $settings;
 
     /** @var Client */
     private $bugsnag;
+
+    public $metadata = [];
 
     public function init ()
     {
@@ -82,6 +87,13 @@ class BugsnagService extends Component
         }
 
         $this->bugsnag->leaveBreadcrumb($text, $type, $metaData);
+    }
+
+    public function metadata(array $metadata = [])
+    {
+        $this->metadata = array_merge($metadata, $metadata);
+
+        return $this;
     }
 
     /**

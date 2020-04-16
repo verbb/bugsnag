@@ -101,9 +101,33 @@ class Settings extends Model
     {
         return [
             [['serverApiKey'], 'required'],
-            //[ 'someAttribute', 'string' ],
-            //[ 'someAttribute', 'default', 'value' => 'Some Default' ],
         ];
+    }
+
+    public function getBrowserConfig()
+    {
+        $data = [
+            'apiKey'       => $this->getBrowserApiKey(),
+            'releaseStage' => $this->getReleaseStage(),
+        ];
+
+        if (!empty($this->notifyReleaseStages)) {
+            $data['enabledReleaseStages'] = $this->notifyReleaseStages;
+        }
+
+        if (!empty($this->getMetadata())) {
+            $data['metadata'] = $this->getMetadata();
+        }
+
+        if ($currentUser = Craft::$app->getUser()->getIdentity()) {
+            $data['user'] = [
+                'id'    => $currentUser->id,
+                'name'  => $currentUser->fullName,
+                'email' => $currentUser->email,
+            ];
+        }
+
+        return $data;
     }
 
     public function getServerApiKey()
@@ -119,6 +143,11 @@ class Settings extends Model
     public function getReleaseStage()
     {
         return $this->parseValue($this->releaseStage);
+    }
+
+    public function getMetadata()
+    {
+        return array_merge($this->metaData, Bugsnag::$plugin->getService()->metadata);
     }
 
     private function parseValue($value)

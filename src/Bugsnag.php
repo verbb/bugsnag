@@ -13,6 +13,7 @@ namespace superbig\bugsnag;
 use craft\events\ExceptionEvent;
 use craft\helpers\UrlHelper;
 use craft\web\ErrorHandler;
+use craft\web\twig\variables\CraftVariable;
 use superbig\bugsnag\services\BugsnagService;
 use superbig\bugsnag\models\Settings;
 
@@ -21,6 +22,7 @@ use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
 
+use superbig\bugsnag\variables\BugsnagVariable;
 use yii\base\Event;
 
 /**
@@ -47,6 +49,15 @@ class Bugsnag extends Plugin
     // =========================================================================
 
     /**
+     * @return BugsnagService
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getService()
+    {
+        return $this->get('bugsnagService');
+    }
+
+    /**
      * @inheritdoc
      */
     public function init ()
@@ -61,6 +72,16 @@ class Bugsnag extends Plugin
                 if ( $event->plugin === $this && !Craft::$app->getRequest()->isConsoleRequest ) {
                     Craft::$app->response->redirect(UrlHelper::cpUrl('settings/plugins/bugsnag'))->send();
                 }
+            }
+        );
+
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('bugsnag', BugsnagVariable::class);
             }
         );
 
