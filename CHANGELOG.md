@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2020-04-16
+
+### Added
+- Added ability to set metadata on the fly by calling `{% do craft.bugsnag.metadata({ order: 1234 }) %}`. Note that this has to be done before the frontend asset is included
+
+### Changed
+- Upgraded the Bugsnag client to v7
+
+### Fixed
+- Fixed user reporting
+
 ## [2.0.6] - 2020-01-22
 
 ### Added
