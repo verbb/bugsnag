@@ -23,7 +23,7 @@ use superbig\bugsnag\models\Settings;
 /**
  * @author    Superbig
  * @package   Bugsnag
- * @since     2.0.0
+ * @since     2.1.0
  */
 class BugsnagVariable
 {

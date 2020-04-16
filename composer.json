@@ -2,7 +2,7 @@
     "name": "superbig/craft3-bugsnag",
     "description": "Log Craft errors/exceptions to Bugsnag.",
     "type": "craft-plugin",
-    "version": "2.0.6",
+    "version": "2.1.0",
     "keywords": [
         "craft",
         "cms",
