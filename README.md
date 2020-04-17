@@ -69,13 +69,36 @@ It will automatically log most exceptions/errors. If you want to log a exception
 
 - For exceptions: `Bugsnag::$plugin->bugsnagService->handleException($exception);`
 
-## JavaScript errors
+## Using Bugsnag on the frontend
+
 You can log JavaScript errors on your site, by including the following in your Twig templates:
 
 ```twig
 {% do view.registerAssetBundle('superbig\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
 ```
 
+This currently uses v7.0.0 of the Bugsnag library.
+
 You also need to set the `browserApiKey` setting.
+
+If you'd rather include the Bugsnag client in your build and initialize it yourself, there is a helper method to get the browser config based on your plugin settings:
+
+```twig
+<script>
+const bugsnagConfig = { ...{{ craft.bugsnag.getBrowserConfig(true) }} }
+</script>
+```
+
+The method takes one parameter, that toggles if it should return JSON or not.
+
+### Adding metadata from templates
+
+If you want to send custom metadata with your request, you may do something like this:
+
+```twig
+{% do craft.bugsnag.metadata({ orderId: cart.id }) %}
+```
+
+Note that you have to call these methods before you include the JS bundle.
 
 Brought to you by [Superbig](https://superbig.co)
