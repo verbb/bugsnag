@@ -107,9 +107,12 @@ class Settings extends Model
     public function getBrowserConfig()
     {
         $data = [
-            'apiKey'       => $this->getBrowserApiKey(),
-            'releaseStage' => $this->getReleaseStage(),
+            'apiKey' => $this->getBrowserApiKey(),
         ];
+
+        if (!empty($this->releaseStage)) {
+            $data['releaseStage'] = $this->getReleaseStage();
+        }
 
         if (!empty($this->notifyReleaseStages)) {
             $data['enabledReleaseStages'] = $this->notifyReleaseStages;
