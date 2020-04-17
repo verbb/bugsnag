@@ -13,6 +13,8 @@ namespace superbig\bugsnag\variables;
 use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\Client;
 use Bugsnag\Report;
+use craft\helpers\Json;
+use craft\helpers\Template;
 use superbig\bugsnag\Bugsnag;
 
 use Craft;
@@ -30,5 +32,16 @@ class BugsnagVariable
     public function metadata(array $data = [])
     {
         return Bugsnag::$plugin->getService()->metadata((array)$data);
+    }
+
+    public function getBrowserConfig($asJson = true)
+    {
+        $config = Bugsnag::$plugin->getSettings()->getBrowserConfig();
+
+        if ($asJson) {
+            return Template::raw(Json::htmlEncode($config));
+        }
+
+        return $config;
     }
 }
