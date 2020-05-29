@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2017 Superbig
  */
 
-namespace superbig\bugsnag\assetbundles\Bugsnag;
+namespace superbig\bugsnag\assetbundles\bugsnag;
 
 use Craft;
 use craft\web\AssetBundle;
