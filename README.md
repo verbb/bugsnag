@@ -1,4 +1,4 @@
-# Bugsnag plugin for Craft CMS 3.x
+# Bugsnag plugin for Craft CMS 4.x
 
 Log Craft errors/exceptions to Bugsnag.
 
@@ -6,7 +6,7 @@ Log Craft errors/exceptions to Bugsnag.
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-RC1 or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -40,7 +40,7 @@ If you want to be able to capture early initialization errors, you need to add t
 
 ### Blacklisting exceptions
 
-If you want to ignore a certain type of exception, like a 404-error, you can do it like this: 
+If you want to ignore a certain type of exception, like a 404-error, you can do it like this:
 
 ```php
 <?php
@@ -55,11 +55,11 @@ return [
                   if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
                       return false;
                   }
-  
+
                   return true;
               },
           ],
-      ],  
+      ],
 ];
 ```
 
