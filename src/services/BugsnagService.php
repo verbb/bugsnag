@@ -39,7 +39,7 @@ class BugsnagService extends Component
 
     public $metadata = [];
 
-    public function init ()
+    public function init (): void
     {
         $this->settings = Bugsnag::$plugin->getSettings();
 
