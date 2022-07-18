@@ -1,36 +1,19 @@
 <?php
-/**
- * Bugsnag plugin for Craft CMS 3.x
- *
- * Log Craft errors/exceptions to Bugsnag.
- *
- * @link      https://superbig.co
- * @copyright Copyright (c) 2017 Superbig
- */
+namespace verbb\bugsnag\assetbundles\frontend;
 
-namespace superbig\bugsnag\assetbundles\frontend;
-
-use superbig\bugsnag\Bugsnag;
+use verbb\bugsnag\Bugsnag;
 
 use Craft;
 use craft\helpers\Json;
 use craft\web\AssetBundle;
 use craft\web\View;
 
-/**
- * @author    Superbig
- * @package   Bugsnag
- * @since     2.0.0
- */
 class FrontEndAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
+    public function init(): void
     {
         $settings = Bugsnag::$plugin->getSettings();
 
@@ -46,16 +29,10 @@ class FrontEndAsset extends AssetBundle
         ];
 
         // Include this wrapper since bugsnag.js might be blocked by adblockers.  We don't want to completely die if so.
-        $jsSettings = [
-
-        ];
-
         $encodedSettings = Json::encode($settings->getBrowserConfig());
-        $js              = "Bugsnag.start({$encodedSettings});";
+        $js = "Bugsnag.start({$encodedSettings});";
 
-
-
-        Craft::$app->view->registerJs($js, View::POS_HEAD);
+        Craft::$app->getView()->registerJs($js, View::POS_HEAD);
 
         parent::init();
     }

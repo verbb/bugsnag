@@ -1,0 +1,56 @@
+{% import '_includes/forms' as forms %}
+
+{% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\bugsnag\\BugsnagAsset') %}
+
+{{ forms.lightswitchField({
+    label: 'Enabled' | t('bugsnag'),
+    instructions: 'Enable exception logging' | t('bugsnag'),
+    id: 'enabled',
+    name: 'enabled',
+    on: settings.enabled,
+}) }}
+
+{{ forms.textField({
+    label: 'Server API key' | t('bugsnag'),
+    instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.' | t('bugsnag'),
+    id: 'serverApiKey',
+    name: 'serverApiKey',
+    value: settings.serverApiKey,
+}) }}
+
+{{ forms.textField({
+    label: 'Browser API key' | t('bugsnag'),
+    instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.' | t('bugsnag'),
+    id: 'browserApiKey',
+    name: 'browserApiKey',
+    value: settings.browserApiKey,
+}) }}
+
+{{ forms.textField({
+    label: 'Release stage' | t('bugsnag'),
+    id: 'releaseStage',
+    name: 'releaseStage',
+    value: settings.releaseStage,
+}) }}
+
+{% set blacklistItems = settings.getBlacklist() %}
+
+{{ forms.editableTableField({
+    label: 'Blacklist' | t('bugsnag'),
+    instructions: 'Disable certain types of exceptions. Class have to be fully namespaced. (i.e. \\yii\\web\\NotFoundHttpException)' | t('bugsnag'),
+    id: 'blacklist',
+    name: 'blacklist',
+    cols: {
+        label: {
+            type: 'singleline',
+            heading: 'Label',
+            code: true,
+        },
+        class: {
+            type: 'singleline',
+            heading: 'Class',
+            code: true,
+        }
+    },
+    rows: blacklistItems,
+}) }}

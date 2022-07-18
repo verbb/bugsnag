@@ -1,46 +1,21 @@
 <?php
-/**
- * Bugsnag plugin for Craft CMS 3.x
- *
- * Log Craft errors/exceptions to Bugsnag.
- *
- * @link      https://superbig.co
- * @copyright Copyright (c) 2017 Superbig
- */
+namespace verbb\bugsnag\assetbundles\bugsnag;
 
-namespace superbig\bugsnag\assetbundles\bugsnag;
-
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-/**
- * @author    Superbig
- * @package   Bugsnag
- * @since     2.0.0
- */
+use verbb\base\assetbundles\CpAsset as VerbbCpAsset;
+
 class BugsnagAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
     public function init()
     {
-        $this->sourcePath = "@superbig/bugsnag/assetbundles/bugsnag/dist";
-
         $this->depends = [
+            VerbbCpAsset::class,
             CpAsset::class,
-        ];
-
-        $this->js = [
-            'js/Bugsnag.js',
-        ];
-
-        $this->css = [
-            'css/Bugsnag.css',
         ];
 
         parent::init();

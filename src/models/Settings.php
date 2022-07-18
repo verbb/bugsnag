@@ -1,61 +1,44 @@
 <?php
-/**
- * Bugsnag plugin for Craft CMS 3.x
- *
- * Log Craft errors/exceptions to Bugsnag.
- *
- * @link      https://superbig.co
- * @copyright Copyright (c) 2017 Superbig
- */
+namespace verbb\bugsnag\models;
 
-namespace superbig\bugsnag\models;
-
-use craft\behaviors\EnvAttributeParserBehavior;
-use superbig\bugsnag\Bugsnag;
+use verbb\bugsnag\Bugsnag;
 
 use Craft;
 use craft\base\Model;
+use craft\behaviors\EnvAttributeParserBehavior;
+use craft\helpers\App;
 
-/**
- * @author    Superbig
- * @package   Bugsnag
- * @since     2.0.0
- *
- * @property boolean $enabled
- * @property string  $browserApiKey
- * @property string  $serverApiKey
- * @property string  $releaseStage
- * @property array   $notifyReleaseStages
- * @property array   $filters
- * @property array   $blacklist
- * @property array   $metaData
- */
+use yii\web\NotFoundHttpException;
+
+use function is_callable;
+
 class Settings extends Model
 {
-    // Public Properties
+    // Properties
     // =========================================================================
 
-    public $enabled             = true;
-    public $serverApiKey        = '';
-    public $browserApiKey       = '';
-    public $releaseStage        = 'production';
-    public $appVersion          = '';
+    public $enabled = true;
+    public $serverApiKey = '';
+    public $browserApiKey = '';
+    public $releaseStage = 'production';
+    public $appVersion = '';
     public $notifyReleaseStages = ['production'];
-    public $filters             = ['password'];
-    public $blacklist           = [];
-    public $metaData            = [];
+    public $filters = ['password'];
+    public $blacklist = [];
+    public $metaData = [];
+
 
     // Public Methods
     // =========================================================================
 
-    public function getBlacklist()
+    public function getBlacklist(): array
     {
         if (!is_array($this->blacklist)) {
             return [];
         }
 
         $blacklist = array_map(function($row) {
-            if (isset($row['class']) && \is_callable($row['class'])) {
+            if (isset($row['class']) && is_callable($row['class'])) {
                 $row['class'] = 'Advanced check set through config file';
             }
 
@@ -67,13 +50,10 @@ class Settings extends Model
 
     public function isValidException($exception): bool
     {
-        /**
-         * @var \yii\web\NotFoundHttpException $exception
-         */
         $isValid = true;
 
         foreach ($this->blacklist as $config) {
-            if (isset($config['class']) && \is_callable($config['class'])) {
+            if (isset($config['class']) && is_callable($config['class'])) {
                 $isValid = $config['class']($exception);
             }
         }
@@ -81,30 +61,26 @@ class Settings extends Model
         return $isValid;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors(): array
     {
         return [
             'parser' => [
-                'class'      => EnvAttributeParserBehavior::class,
+                'class' => EnvAttributeParserBehavior::class,
                 'attributes' => ['serverApiKey'],
             ],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function defineRules(): array
     {
-        return [
-            [['serverApiKey'], 'required'],
-        ];
+        $rules = parent::defineRules();
+
+        $rules[] = [['serverApiKey'], 'required'];
+
+        return $rules;
     }
 
-    public function getBrowserConfig()
+    public function getBrowserConfig(): array
     {
         $data = [
             'apiKey' => $this->getBrowserApiKey(),
@@ -124,8 +100,8 @@ class Settings extends Model
 
         if ($currentUser = Craft::$app->getUser()->getIdentity()) {
             $data['user'] = [
-                'id'    => $currentUser->id,
-                'name'  => $currentUser->fullName,
+                'id' => $currentUser->id,
+                'name' => $currentUser->fullName,
                 'email' => $currentUser->email,
             ];
         }
@@ -148,13 +124,17 @@ class Settings extends Model
         return $this->parseValue($this->releaseStage);
     }
 
-    public function getMetadata()
+    public function getMetadata(): array
     {
         return array_merge($this->metaData, Bugsnag::$plugin->getService()->metadata);
     }
 
+
+    // Private Methods
+    // =========================================================================
+
     private function parseValue($value)
     {
-        return Craft::parseEnv($value);
+        return App::parseEnv($value);
     }
 }

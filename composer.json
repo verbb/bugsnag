@@ -1,8 +1,8 @@
 {
-    "name": "superbig/craft3-bugsnag",
+    "name": "verbb/bugsnag",
     "description": "Log Craft errors/exceptions to Bugsnag.",
     "type": "craft-plugin",
-    "version": "2.1.2",
+    "version": "3.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -11,41 +11,37 @@
         "bugsnag"
     ],
     "support": {
-        "docs": "https://github.com/sjelfull/craft3-bugsnag/blob/master/README.md",
-        "issues": "https://github.com/sjelfull/craft3-bugsnag/issues"
+        "email": "support@verbb.io",
+        "issues": "https://github.com/verbb/bugsnag/issues?state=open",
+        "source": "https://github.com/verbb/bugsnag",
+        "docs": "https://github.com/verbb/bugsnag",
+        "rss": "https://github.com/verbb/bugsnag/commits/v2.atom"
     },
     "license": "MIT",
     "authors": [
+        {
+            "name": "Verbb",
+            "homepage": "http://verbb.io"
+        },
         {
             "name": "Superbig",
             "homepage": "https://superbig.co"
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0",
+        "craftcms/cms": "^3.7.0",
+        "verbb/base": "^1.0.2",
         "bugsnag/bugsnag": "^3.16.0"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ],
     "autoload": {
         "psr-4": {
-          "superbig\\bugsnag\\": "src/"
+            "verbb\\bugsnag\\": "src/"
         }
     },
     "extra": {
         "name": "Bugsnag",
         "handle": "bugsnag",
-        "schemaVersion": "2.0.0",
-        "hasCpSettings": true,
-        "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/sjelfull/craft3-bugsnag/master/CHANGELOG.md",
-        "components": {
-            "bugsnagService": "superbig\\bugsnag\\services\\BugsnagService"
-        },
-        "class": "superbig\\bugsnag\\Bugsnag"
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/bugsnag/craft-3/CHANGELOG.md",
+        "class": "verbb\\bugsnag\\Bugsnag"
     }
 }

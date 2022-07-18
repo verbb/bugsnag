@@ -1,20 +1,18 @@
 <?php
-namespace superbig\bugsnag;
-
-use Craft;
-use craft\base\Plugin;
+namespace verbb\bugsnag;
 
 use yii\base\BootstrapInterface;
+use yii\base\Application;
 
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * Installs our components during the bootstrap process to get us loaded 
+     * Installs our components during the bootstrap process to get us loaded
      * sooner in case something crashes.
      *
-     * @param \yii\base\Application $app
+     * @param Application $app
      */
-    public function bootstrap($app)
+    public function bootstrap($app): void
     {
         $app->getPlugins()->getPlugin('bugsnag');
     }

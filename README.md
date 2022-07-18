@@ -1,80 +1,72 @@
-# Bugsnag plugin for Craft CMS 3.x
-
-Log Craft errors/exceptions to Bugsnag.
-
-![Screenshot](resources/icon.png)
-
-## Requirements
-
-This plugin requires Craft CMS 3.0.0-RC1 or later.
+# Bugsnag plugin for Craft CMS
+Log Craft errors/exceptions to [Bugsnag](https://www.bugsnag.com/).
 
 ## Installation
+You can install Bugsnag via the plugin store, or through Composer.
 
-To install the plugin, follow these instructions.
+### Craft Plugin Store
+To install **Bugsnag**, navigate to the _Plugin Store_ section of your Craft control panel, search for `Bugsnag`, and click the _Try_ button.
+
+### Composer
+You can also add the package to your project using Composer.
 
 1. Open your terminal and go to your Craft project:
 
         cd /path/to/project
 
 2. Then tell Composer to load the plugin:
-
-        composer require superbig/craft3-bugsnag
+    
+        composer require verbb/bugsnag
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Bugsnag.
 
-## Bugsnag Overview
-
-Bugsnag's cross platform error monitoring automatically detects crashes in your applications, letting you ship with confidence.
-
 ## Configuring Bugsnag
-
 1. Copy the config.php configuration file into your `craft/config` folder as **bugsnag.php**.
 2. Update `serverApiKey` with a API key from your Bugsnag project.
 3. (Optionally) Set the `releaseStage` configuration setting to something. Defaults to `production`.
 
 If you want to be able to capture early initialization errors, you need to add this plugin to your project's bootstrap configuration. To do this, in `config/app.php`, add the following:
 
+```php
 'bootstrap' => [
-    '\superbig\bugsnag\Bootstrap',
+    '\verbb\bugsnag\Bootstrap',
 ]
+```
 
 ### Blacklisting exceptions
-
 If you want to ignore a certain type of exception, like a 404-error, you can do it like this: 
 
 ```php
 <?php
 return [
   'blacklist' => [
-          [
-              'label' => '404 errors etc',
-              'class' => function($exception) {
-                  /**
-                   * @var \yii\web\NotFoundHttpException $exception
-                   */
-                  if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
-                      return false;
-                  }
-  
-                  return true;
-              },
-          ],
-      ],  
+      [
+          'label' => '404 errors etc',
+          'class' => function($exception) {
+                /**
+                * @var \yii\web\NotFoundHttpException $exception
+                */
+                if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
+                    return false;
+                }
+
+                return true;
+            },
+        ],
+    ],  
 ];
 ```
 
 ## Using Bugsnag
-
 It will automatically log most exceptions/errors. If you want to log a exceptions/error from an custom plugin, you may use the service methods:
 
 - For exceptions: `Bugsnag::$plugin->bugsnagService->handleException($exception);`
 
 ## Using Bugsnag on the frontend
-
 You can log JavaScript errors on your site, by including the following in your Twig templates:
 
 ```twig
-{% do view.registerAssetBundle('superbig\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
+{% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
 ```
 
 This currently uses v7.0.0 of the Bugsnag library.
@@ -85,14 +77,13 @@ If you'd rather include the Bugsnag client in your build and initialize it yours
 
 ```twig
 <script>
-const bugsnagConfig = { ...{{ craft.bugsnag.getBrowserConfig(true) }} }
+    const bugsnagConfig = { ...{{ craft.bugsnag.getBrowserConfig(true) }} }
 </script>
 ```
 
 The method takes one parameter, that toggles if it should return JSON or not.
 
 ### Adding metadata from templates
-
 If you want to send custom metadata with your request, you may do something like this:
 
 ```twig
@@ -101,4 +92,14 @@ If you want to send custom metadata with your request, you may do something like
 
 Note that you have to call these methods before you include the JS bundle.
 
-Brought to you by [Superbig](https://superbig.co)
+## Credits
+Originally created by the team at [Superbig](https://superbig.co/).
+
+## Show your Support
+Bugsnag is licensed under the MIT license, meaning it will always be free and open source – we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
+
+<h2></h2>
+
+<a href="https://verbb.io" target="_blank">
+    <img width="100" src="https://verbb.io/assets/img/verbb-pill.svg">
+</a>

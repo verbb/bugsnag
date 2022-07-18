@@ -1,149 +1,99 @@
 <?php
-/**
- * Bugsnag plugin for Craft CMS 3.x
- *
- * Log Craft errors/exceptions to Bugsnag.
- *
- * @link      https://superbig.co
- * @copyright Copyright (c) 2017 Superbig
- */
+namespace verbb\bugsnag;
 
-namespace superbig\bugsnag;
-
-use craft\events\ExceptionEvent;
-use craft\helpers\UrlHelper;
-use craft\web\ErrorHandler;
-use craft\web\twig\variables\CraftVariable;
-use superbig\bugsnag\services\BugsnagService;
-use superbig\bugsnag\models\Settings;
+use verbb\bugsnag\base\PluginTrait;
+use verbb\bugsnag\models\Settings;
+use verbb\bugsnag\variables\BugsnagVariable;
 
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
+use craft\events\ExceptionEvent;
 use craft\events\PluginEvent;
+use craft\helpers\UrlHelper;
+use craft\services\Plugins;
+use craft\web\ErrorHandler;
+use craft\web\twig\variables\CraftVariable;
 
-use superbig\bugsnag\variables\BugsnagVariable;
 use yii\base\Event;
+use yii\base\InvalidConfigException;
 
-/**
- * Class Bugsnag
- *
- * @author    Superbig
- * @package   Bugsnag
- * @since     2.0.0
- *
- * @property  BugsnagService $bugsnagService
- * @method  Settings getSettings()
- */
 class Bugsnag extends Plugin
 {
-    // Static Properties
+    // Properties
     // =========================================================================
 
-    /**
-     * @var Bugsnag
-     */
-    public static $plugin;
+    public $schemaVersion = '2.0.0';
+    public $hasCpSettings = true;
+
+
+    // Traits
+    // =========================================================================
+
+    use PluginTrait;
+
 
     // Public Methods
     // =========================================================================
 
-    /**
-     * @return BugsnagService
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function getService()
-    {
-        return $this->get('bugsnagService');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function init ()
+    public function init(): void
     {
         parent::init();
+
         self::$plugin = $this;
 
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ( $event->plugin === $this && !Craft::$app->getRequest()->isConsoleRequest ) {
-                    Craft::$app->response->redirect(UrlHelper::cpUrl('settings/plugins/bugsnag'))->send();
-                }
-            }
-        );
-
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('bugsnag', BugsnagVariable::class);
-            }
-        );
-
-        Event::on(
-            ErrorHandler::className(),
-            ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION,
-            function (ExceptionEvent $event) {
-                $settings = $this->getSettings();
-
-                if (is_array($settings->blacklist)) {
-                    foreach ($settings->blacklist as $config) {
-                        if (isset($config['class'])) {
-                            if (is_callable($config['class'])) {
-                                $result = $config['class']($event->exception);
-                                if (!$result) {
-                                    return;
-                                }
-                            }
-                            else {
-                                if ($event->exception instanceof $config['class']) {
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                $this->bugsnagService->handleException($event->exception);
-            }
-        );
-
-        Craft::info(
-            Craft::t(
-                'bugsnag',
-                '{name} plugin loaded',
-                [ 'name' => $this->name ]
-            ),
-            __METHOD__
-        );
+        $this->_setPluginComponents();
+        $this->_setLogging();
+        $this->_registerVariables();
+        $this->_registerCraftEventListeners();
     }
+
+    public function getSettingsResponse()
+    {
+        Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('bugsnag/settings'));
+    }
+
 
     // Protected Methods
     // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    protected function createSettingsModel ()
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function settingsHtml (): string
+
+    // Private Methods
+    // =========================================================================
+
+    private function _registerVariables()
     {
-        return Craft::$app->view->renderTemplate(
-            'bugsnag/settings',
-            [
-                'settings' => $this->getSettings()
-            ]
-        );
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+            $event->sender->set('bugsnag', BugsnagVariable::class);
+        });
     }
+
+    private function _registerCraftEventListeners()
+    {
+        Event::on(ErrorHandler::class, ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, function(ExceptionEvent $event) {
+            $settings = $this->getSettings();
+
+            if (is_array($settings->blacklist)) {
+                foreach ($settings->blacklist as $config) {
+                    if (isset($config['class'])) {
+                        if (is_callable($config['class'])) {
+                            $result = $config['class']($event->exception);
+                            if (!$result) {
+                                return;
+                            }
+                        } else if ($event->exception instanceof $config['class']) {
+                            return;
+                        }
+                    }
+                }
+            }
+
+            $this->getService()->handleException($event->exception);
+        });
+    }
+
 }
