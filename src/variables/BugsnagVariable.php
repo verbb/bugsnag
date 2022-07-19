@@ -27,4 +27,9 @@ class BugsnagVariable
 
         return $config;
     }
+
+    public function handleException($exception): void
+    {
+        Bugsnag::$plugin->getService()->handleException($exception);
+    }
 }

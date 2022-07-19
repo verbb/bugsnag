@@ -77,7 +77,7 @@ class Service extends Component
         return $this;
     }
 
-    public function handleException($exception)
+    public function handleException($exception): void
     {
         if (!$this->isEnabled()) {
             return true;

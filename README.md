@@ -43,9 +43,6 @@ return [
       [
           'label' => '404 errors etc',
           'class' => function($exception) {
-                /**
-                * @var \yii\web\NotFoundHttpException $exception
-                */
                 if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
                     return false;
                 }
@@ -91,6 +88,13 @@ If you want to send custom metadata with your request, you may do something like
 ```
 
 Note that you have to call these methods before you include the JS bundle.
+
+### Throwing an exception from templates
+You can trigger an exception from your templates.
+
+```twig
+{% do craft.bugsnag.handleException('Something went terribly wrong.') %}
+```
 
 ## Credits
 Originally created by the team at [Superbig](https://superbig.co/).
