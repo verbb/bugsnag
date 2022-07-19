@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2 - 2022-07-19
+
+### Added
+- Allow appropriate plugin settings to be set via `.env` variables.
+
+### Fixed
+- Fix settings page in control panel not working.
+
 ## 3.0.1 - 2022-07-19
 
 ### Added
