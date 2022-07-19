@@ -22,7 +22,7 @@ You can also add the package to your project using Composer.
 
 ## Configuring Bugsnag
 1. Copy the config.php configuration file into your `craft/config` folder as **bugsnag.php**.
-2. Update `serverApiKey` with a API key from your Bugsnag project.
+2. Update `serverApiKey` with an API key from your Bugsnag project.
 3. (Optionally) Set the `releaseStage` configuration setting to something. Defaults to `production`.
 
 If you want to be able to capture early initialization errors, you need to add this plugin to your project's bootstrap configuration. To do this, in `config/app.php`, add the following:
@@ -58,7 +58,7 @@ return [
 ```
 
 ## Using Bugsnag
-It will automatically log most exceptions/errors. If you want to log a exceptions/error from an custom plugin, you may use the service methods:
+It will automatically log most exceptions/errors. If you want to log an exceptions/error from a custom plugin, you may use the service methods:
 
 - For exceptions: `Bugsnag::$plugin->getService()->handleException($exception);`
 

@@ -8,24 +8,21 @@ use verbb\bugsnag\variables\BugsnagVariable;
 use Craft;
 use craft\base\Plugin;
 use craft\events\ExceptionEvent;
-use craft\events\PluginEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\UrlHelper;
-use craft\services\Plugins;
 use craft\web\ErrorHandler;
 use craft\web\UrlManager;
 use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
-use yii\base\InvalidConfigException;
 
 class Bugsnag extends Plugin
 {
     // Properties
     // =========================================================================
 
-    public $schemaVersion = '2.0.0';
-    public $hasCpSettings = true;
+    public string $schemaVersion = '2.0.0';
+    public bool $hasCpSettings = true;
 
 
     // Traits
@@ -55,9 +52,9 @@ class Bugsnag extends Plugin
         return Craft::t('bugsnag', 'Bugsnag');
     }
 
-    public function getSettingsResponse()
+    public function getSettingsResponse(): mixed
     {
-        Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('bugsnag/settings'));
+        return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('bugsnag/settings'));
     }
 
 
@@ -73,14 +70,14 @@ class Bugsnag extends Plugin
     // Private Methods
     // =========================================================================
 
-    private function _registerVariables()
+    private function _registerVariables(): void
     {
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $event->sender->set('bugsnag', BugsnagVariable::class);
         });
     }
 
-    private function _registerCpRoutes()
+    private function _registerCpRoutes(): void
     {
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
             $event->rules = array_merge($event->rules, [
@@ -89,23 +86,21 @@ class Bugsnag extends Plugin
         });
     }
 
-    private function _registerCraftEventListeners()
+    private function _registerCraftEventListeners(): void
     {
         Event::on(ErrorHandler::class, ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, function(ExceptionEvent $event) {
             $settings = $this->getSettings();
 
-            if (is_array($settings->blacklist)) {
-                foreach ($settings->blacklist as $config) {
-                    if (isset($config['class'])) {
-                        if (is_callable($config['class'])) {
-                            $result = $config['class']($event->exception);
+            foreach ($settings->blacklist as $config) {
+                if (isset($config['class'])) {
+                    if (is_callable($config['class'])) {
+                        $result = $config['class']($event->exception);
 
-                            if (!$result) {
-                                return;
-                            }
-                        } else if ($event->exception instanceof $config['class']) {
+                        if (!$result) {
                             return;
                         }
+                    } else if ($event->exception instanceof $config['class']) {
+                        return;
                     }
                 }
             }

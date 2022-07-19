@@ -9,20 +9,16 @@ use craft\base\Component;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\Client;
-use Bugsnag\Report;
 
 class Service extends Component
 {
     // Properties
     // =========================================================================
 
-    /** @var Settings */
-    private $settings;
+    public array $metadata = [];
 
-    /** @var Client */
-    private $bugsnag;
-
-    public $metadata = [];
+    private ?Settings $settings = null;
+    private ?Client $bugsnag = null;
 
 
     // Public Methods
@@ -40,7 +36,7 @@ class Service extends Component
             $this->bugsnag->setNotifyReleaseStages($this->settings->notifyReleaseStages);
 
             if (!empty($this->settings->filters)) {
-                $this->bugsnag->setFilters($this->settings->filters);
+                $this->bugsnag->setRedactedKeys($this->settings->filters);
             }
 
             $this->bugsnag->registerCallback(function($report) {

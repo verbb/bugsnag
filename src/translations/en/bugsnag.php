@@ -10,4 +10,5 @@ return [
     'Release stage' => 'Release stage',
     'Blacklist' => 'Blacklist',
     'Disable certain types of exceptions. Class have to be fully namespaced. (i.e. \\yii\\web\\NotFoundHttpException)' => 'Disable certain types of exceptions. Class have to be fully namespaced. (i.e. \\yii\\web\\NotFoundHttpException)',
+    'Enable exception logging' => 'Enable exception logging',
 ];

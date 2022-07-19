@@ -7,6 +7,8 @@ use verbb\bugsnag\services\Service;
 use craft\helpers\Json;
 use craft\helpers\Template;
 
+use Twig\Markup;
+
 class BugsnagVariable
 {
     // Public Methods
@@ -22,7 +24,7 @@ class BugsnagVariable
         return Bugsnag::$plugin->getService()->metadata($data);
     }
 
-    public function getBrowserConfig($asJson = true)
+    public function getBrowserConfig($asJson = true): Markup|array
     {
         $config = Bugsnag::$plugin->getSettings()->getBrowserConfig();
 

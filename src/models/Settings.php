@@ -5,27 +5,22 @@ use verbb\bugsnag\Bugsnag;
 
 use Craft;
 use craft\base\Model;
-use craft\behaviors\EnvAttributeParserBehavior;
 use craft\helpers\App;
-
-use yii\web\NotFoundHttpException;
-
-use function is_callable;
 
 class Settings extends Model
 {
     // Properties
     // =========================================================================
 
-    public $enabled = true;
-    public $serverApiKey = '';
-    public $browserApiKey = '';
-    public $releaseStage = 'production';
-    public $appVersion = '';
-    public $notifyReleaseStages = ['production'];
-    public $filters = ['password'];
-    public $blacklist = [];
-    public $metaData = [];
+    public bool $enabled = true;
+    public string $serverApiKey = '';
+    public string $browserApiKey = '';
+    public string $releaseStage = 'production';
+    public string $appVersion = '';
+    public array $notifyReleaseStages = ['production'];
+    public array $filters = ['password'];
+    public array $blacklist = [];
+    public array $metaData = [];
 
 
     // Public Methods
@@ -33,19 +28,13 @@ class Settings extends Model
 
     public function getBlacklist(): array
     {
-        if (!is_array($this->blacklist)) {
-            return [];
-        }
-
-        $blacklist = array_map(function($row) {
+        return array_filter(array_map(function($row) {
             if (isset($row['class']) && is_callable($row['class'])) {
                 $row['class'] = 'Advanced check set through config file';
             }
 
             return $row;
-        }, $this->blacklist);
-
-        return array_filter($blacklist);
+        }, $this->blacklist));
     }
 
     public function isValidException($exception): bool
@@ -59,25 +48,6 @@ class Settings extends Model
         }
 
         return $isValid;
-    }
-
-    public function behaviors(): array
-    {
-        return [
-            'parser' => [
-                'class' => EnvAttributeParserBehavior::class,
-                'attributes' => ['serverApiKey'],
-            ],
-        ];
-    }
-
-    public function defineRules(): array
-    {
-        $rules = parent::defineRules();
-
-        $rules[] = [['serverApiKey'], 'required'];
-
-        return $rules;
     }
 
     public function getBrowserConfig(): array
@@ -109,22 +79,22 @@ class Settings extends Model
         return $data;
     }
 
-    public function getEnabled()
+    public function getEnabled(): bool|string|null
     {
         return App::parseEnv($this->enabled);
     }
 
-    public function getServerApiKey()
+    public function getServerApiKey(): bool|string|null
     {
         return App::parseEnv($this->serverApiKey);
     }
 
-    public function getBrowserApiKey()
+    public function getBrowserApiKey(): bool|string|null
     {
         return App::parseEnv($this->browserApiKey);
     }
 
-    public function getReleaseStage()
+    public function getReleaseStage(): bool|string|null
     {
         return App::parseEnv($this->releaseStage);
     }

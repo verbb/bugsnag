@@ -1,6 +1,7 @@
 <?php
 namespace verbb\bugsnag\base;
 
+use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\services\Service;
 
 use Craft;
@@ -14,7 +15,7 @@ trait PluginTrait
     // Static Properties
     // =========================================================================
 
-    public static $plugin;
+    public static Bugsnag $plugin;
 
 
     // Public Methods

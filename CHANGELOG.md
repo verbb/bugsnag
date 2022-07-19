@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0 - 2022-07-19
+
+### Changed
+- Now requires PHP `8.0.2+`.
+- Now requires Craft `4.0.0+`.
+
 ## 3.0.2 - 2022-07-19
 
 ### Added
@@ -55,7 +61,7 @@
 - Parse `browserApiKey` and `serverApiKey` for env variables and aliases
 
 ### Fixed
-- Fixed frontend Bugsnag asset to comply with latest version of JS client
+- Fixed frontend Bugsnag asset to comply with the latest version of JS client
 
 ## 2.0.5 - 2019-08-27
 
@@ -66,7 +72,7 @@
 - The plugin can now capture early initialization errors (if manually setup in `app.php`)
 
 ### Fixed
-- Fixed error when no items was added to exceptions blacklist
+- Fixed error when no items were added to exceptions blacklist
 
 ## 2.0.4 - 2019-03-14
 
