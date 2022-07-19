@@ -1,13 +1,28 @@
+{% extends 'bugsnag/_layouts' %}
 {% import '_includes/forms' as forms %}
 
-{% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\bugsnag\\BugsnagAsset') %}
+{% set crumbs = [
+    { label: 'Bugsnag' | t('bugsnag'), url: url('bugsnag/settings') },
+    { label: 'Settings' | t('app'), url: url('bugsnag/settings') }
+] %}
+
+{% set selectedTab = 'settings' %}
+{% set fullPageForm = true %}
+
+{% block blockContent %}
+
+<input type="hidden" name="action" value="plugins/save-plugin-settings">
+<input type="hidden" name="pluginHandle" value="bugsnag">
+
+{% namespace 'settings' %}
 
 {{ forms.lightswitchField({
     label: 'Enabled' | t('bugsnag'),
-    instructions: 'Enable exception logging' | t('bugsnag'),
+    instructions: 'Enable exception logging.' | t('bugsnag'),
     id: 'enabled',
     name: 'enabled',
     on: settings.enabled,
+    first: true,
 }) }}
 
 {{ forms.textField({
@@ -54,3 +69,7 @@
     },
     rows: blacklistItems,
 }) }}
+
+{% endnamespace %}
+
+{% endblock %}

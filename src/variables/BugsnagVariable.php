@@ -12,6 +12,11 @@ class BugsnagVariable
     // Public Methods
     // =========================================================================
 
+    public function getPluginName(): string
+    {
+        return Bugsnag::$plugin->getPluginName();
+    }
+
     public function metadata(array $data = []): Service
     {
         return Bugsnag::$plugin->getService()->metadata($data);

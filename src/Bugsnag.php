@@ -9,9 +9,11 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\ExceptionEvent;
 use craft\events\PluginEvent;
+use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\UrlHelper;
 use craft\services\Plugins;
 use craft\web\ErrorHandler;
+use craft\web\UrlManager;
 use craft\web\twig\variables\CraftVariable;
 
 use yii\base\Event;
@@ -43,8 +45,14 @@ class Bugsnag extends Plugin
 
         $this->_setPluginComponents();
         $this->_setLogging();
+        $this->_registerCpRoutes();
         $this->_registerVariables();
         $this->_registerCraftEventListeners();
+    }
+
+    public function getPluginName(): string
+    {
+        return Craft::t('bugsnag', 'Bugsnag');
     }
 
     public function getSettingsResponse()
@@ -69,6 +77,15 @@ class Bugsnag extends Plugin
     {
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $event->sender->set('bugsnag', BugsnagVariable::class);
+        });
+    }
+
+    private function _registerCpRoutes()
+    {
+        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
+            $event->rules = array_merge($event->rules, [
+                'bugsnag/settings' => 'bugsnag/base/settings',
+            ]);
         });
     }
 
