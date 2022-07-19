@@ -38,12 +38,15 @@ If you want to ignore a certain type of exception, like a 404-error, you can do 
 
 ```php
 <?php
+
+use yii\web\NotFoundHttpException;
+
 return [
-  'blacklist' => [
-      [
-          'label' => '404 errors etc',
-          'class' => function($exception) {
-                if ($exception instanceof \yii\web\NotFoundHttpException && $exception->statusCode === 404) {
+    'blacklist' => [
+        [
+            'label' => '404 errors etc',
+            'class' => function($exception) {
+                if ($exception instanceof NotFoundHttpException && $exception->statusCode === 404) {
                     return false;
                 }
 
@@ -57,7 +60,7 @@ return [
 ## Using Bugsnag
 It will automatically log most exceptions/errors. If you want to log a exceptions/error from an custom plugin, you may use the service methods:
 
-- For exceptions: `Bugsnag::$plugin->bugsnagService->handleException($exception);`
+- For exceptions: `Bugsnag::$plugin->getService()->handleException($exception);`
 
 ## Using Bugsnag on the frontend
 You can log JavaScript errors on your site, by including the following in your Twig templates:

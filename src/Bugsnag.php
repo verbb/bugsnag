@@ -82,6 +82,7 @@ class Bugsnag extends Plugin
                     if (isset($config['class'])) {
                         if (is_callable($config['class'])) {
                             $result = $config['class']($event->exception);
+
                             if (!$result) {
                                 return;
                             }
