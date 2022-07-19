@@ -80,7 +80,7 @@ class Service extends Component
     public function handleException($exception): void
     {
         if (!$this->isEnabled()) {
-            return true;
+            return;
         }
 
         $this->bugsnag->notifyException($exception);
