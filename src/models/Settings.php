@@ -86,7 +86,7 @@ class Settings extends Model
             'apiKey' => $this->getBrowserApiKey(),
         ];
 
-        if (!empty($this->releaseStage)) {
+        if (!empty($this->getReleaseStage())) {
             $data['releaseStage'] = $this->getReleaseStage();
         }
 
@@ -109,32 +109,28 @@ class Settings extends Model
         return $data;
     }
 
+    public function getEnabled()
+    {
+        return App::parseEnv($this->enabled);
+    }
+
     public function getServerApiKey()
     {
-        return $this->parseValue($this->serverApiKey);
+        return App::parseEnv($this->serverApiKey);
     }
 
     public function getBrowserApiKey()
     {
-        return $this->parseValue($this->browserApiKey);
+        return App::parseEnv($this->browserApiKey);
     }
 
     public function getReleaseStage()
     {
-        return $this->parseValue($this->releaseStage);
+        return App::parseEnv($this->releaseStage);
     }
 
     public function getMetadata(): array
     {
         return array_merge($this->metaData, Bugsnag::$plugin->getService()->metadata);
-    }
-
-
-    // Private Methods
-    // =========================================================================
-
-    private function parseValue($value)
-    {
-        return App::parseEnv($value);
     }
 }

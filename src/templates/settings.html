@@ -16,36 +16,41 @@
 
 {% namespace 'settings' %}
 
-{{ forms.lightswitchField({
+{{ forms.booleanMenuField({
     label: 'Enabled' | t('bugsnag'),
     instructions: 'Enable exception logging.' | t('bugsnag'),
     id: 'enabled',
     name: 'enabled',
-    on: settings.enabled,
+    includeEnvVars: true,
     first: true,
 }) }}
 
-{{ forms.textField({
+{{ forms.autosuggestField({
     label: 'Server API key' | t('bugsnag'),
     instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.' | t('bugsnag'),
     id: 'serverApiKey',
     name: 'serverApiKey',
     value: settings.serverApiKey,
+    suggestEnvVars: true,
+    required: true,
 }) }}
 
-{{ forms.textField({
+{{ forms.autosuggestField({
     label: 'Browser API key' | t('bugsnag'),
     instructions: 'You can find the API key immediately after creating a new project from your Bugsnag dashboard, or later on your project’s settings page.' | t('bugsnag'),
     id: 'browserApiKey',
     name: 'browserApiKey',
     value: settings.browserApiKey,
+    suggestEnvVars: true,
+    required: true,
 }) }}
 
-{{ forms.textField({
+{{ forms.autosuggestField({
     label: 'Release stage' | t('bugsnag'),
     id: 'releaseStage',
     name: 'releaseStage',
     value: settings.releaseStage,
+    suggestEnvVars: true,
 }) }}
 
 {% set blacklistItems = settings.getBlacklist() %}
