@@ -1,6 +1,6 @@
 {
     "name": "verbb/bugsnag",
-    "description": "Log Craft errors/exceptions to Bugsnag.",
+    "description": "Log errors/exceptions to Bugsnag.",
     "type": "craft-plugin",
     "version": "4.0.0",
     "keywords": [
