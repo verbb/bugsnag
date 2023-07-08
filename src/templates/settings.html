@@ -1,5 +1,7 @@
 {% extends 'bugsnag/_layouts' %}
+
 {% import '_includes/forms' as forms %}
+{% import 'verbb-base/_macros' as macros %}
 
 {% requireAdmin %}
 
@@ -25,6 +27,7 @@
     name: 'enabled',
     includeEnvVars: true,
     first: true,
+    warning: macros.configWarning('enabled', 'bugsnag'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -35,6 +38,7 @@
     value: settings.serverApiKey,
     suggestEnvVars: true,
     required: true,
+    warning: macros.configWarning('serverApiKey', 'bugsnag'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -45,6 +49,7 @@
     value: settings.browserApiKey,
     suggestEnvVars: true,
     required: true,
+    warning: macros.configWarning('browserApiKey', 'bugsnag'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -53,6 +58,7 @@
     name: 'releaseStage',
     value: settings.releaseStage,
     suggestEnvVars: true,
+    warning: macros.configWarning('releaseStage', 'bugsnag'),
 }) }}
 
 {% set blacklistItems = settings.getBlacklist() %}
@@ -78,6 +84,7 @@
     allowAdd: true,
     allowDelete: true,
     allowReorder: true,
+    warning: macros.configWarning('blacklist', 'bugsnag'),
 }) }}
 
 {% endnamespace %}
