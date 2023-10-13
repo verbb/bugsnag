@@ -21,8 +21,8 @@ class Bugsnag extends Plugin
     // Properties
     // =========================================================================
 
-    public string $schemaVersion = '2.0.0';
     public bool $hasCpSettings = true;
+    public string $schemaVersion = '2.0.0';
 
 
     // Traits
@@ -40,11 +40,12 @@ class Bugsnag extends Plugin
 
         self::$plugin = $this;
 
-        $this->_setPluginComponents();
-        $this->_setLogging();
-        $this->_registerCpRoutes();
         $this->_registerVariables();
-        $this->_registerCraftEventListeners();
+        $this->_registerEventHandlers();
+
+        if (Craft::$app->getRequest()->getIsCpRequest()) {
+            $this->_registerCpRoutes();
+        }
     }
 
     public function getPluginName(): string
@@ -86,7 +87,7 @@ class Bugsnag extends Plugin
         });
     }
 
-    private function _registerCraftEventListeners(): void
+    private function _registerEventHandlers(): void
     {
         Event::on(ErrorHandler::class, ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, function(ExceptionEvent $event) {
             $settings = $this->getSettings();

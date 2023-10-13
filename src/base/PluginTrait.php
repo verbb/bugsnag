@@ -4,39 +4,35 @@ namespace verbb\bugsnag\base;
 use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\services\Service;
 
-use Craft;
-
-use yii\log\Logger;
-
-use verbb\base\BaseHelper;
+use verbb\base\LogTrait;
+use verbb\base\helpers\Plugin;
 
 trait PluginTrait
 {
-    // Static Properties
+    // Properties
     // =========================================================================
 
-    public static Bugsnag $plugin;
+    public static ?Bugsnag $plugin = null;
 
 
-    // Public Methods
+    // Traits
     // =========================================================================
 
-    public static function log($message, $attributes = []): void
+    use LogTrait;
+
+
+    // Static Methods
+    // =========================================================================
+
+    public static function config(): array
     {
-        if ($attributes) {
-            $message = Craft::t('bugsnag', $message, $attributes);
-        }
+        Plugin::bootstrapPlugin('bugsnag');
 
-        Craft::getLogger()->log($message, Logger::LEVEL_INFO, 'bugsnag');
-    }
-
-    public static function error($message, $attributes = []): void
-    {
-        if ($attributes) {
-            $message = Craft::t('bugsnag', $message, $attributes);
-        }
-
-        Craft::getLogger()->log($message, Logger::LEVEL_ERROR, 'bugsnag');
+        return [
+            'components' => [
+                'service' => Service::class,
+            ],
+        ];
     }
 
 
@@ -46,24 +42,6 @@ trait PluginTrait
     public function getService(): Service
     {
         return $this->get('service');
-    }
-
-
-    // Private Methods
-    // =========================================================================
-
-    private function _setPluginComponents(): void
-    {
-        $this->setComponents([
-            'service' => Service::class,
-        ]);
-
-        BaseHelper::registerModule();
-    }
-
-    private function _setLogging(): void
-    {
-        BaseHelper::setFileLogging('bugsnag');
     }
 
 }
