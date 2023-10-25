@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.0.1 - 2023-10-25
+
+### Added
+- Add plugin settings warnings when set via the config file.
+
+### Changed
+- Only admins are now allowed to access plugin settings.
+
+### Fixed
+- Fix being unable to modify blacklist items in the control panel settings.
+
 ## 4.0.0 - 2022-07-19
 
 ### Changed
