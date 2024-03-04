@@ -1,5 +1,5 @@
-# Bugsnag plugin for Craft CMS
-<img width="500" src="https://verbb.imgix.net/plugins/bugsnag/bugsnag-social-card.png?v=1">
+<p align="center"><img src="https://verbb.imgix.net/plugins/bugsnag/bugsnag-icon.svg" width="100" height="100" alt="Bugsnag icon"></p>
+<h1 align="center">Bugsnag for Craft CMS</h1>
 
 Bugsnag is a Craft CMS plugin to log errors/exceptions to [Bugsnag](https://www.bugsnag.com/).
 
