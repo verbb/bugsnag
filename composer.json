@@ -2,7 +2,7 @@
     "name": "verbb/bugsnag",
     "description": "Log errors/exceptions to Bugsnag.",
     "type": "craft-plugin",
-    "version": "5.0.1",
+    "version": "6.0.0-alpha.1",
     "keywords": [
         "craft",
         "cms",
@@ -29,10 +29,10 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "craftcms/cms": "^5.0.0",
+        "php": "^8.4",
+        "craftcms/cms": "6.x-dev",
         "bugsnag/bugsnag": "^3.16.0",
-        "verbb/base": "^3.0.0"
+        "verbb/base": "dev-craft-6"
     },
     "autoload": {
         "psr-4": {
@@ -42,7 +42,9 @@
     "extra": {
         "name": "Bugsnag",
         "handle": "bugsnag",
-        "changelogUrl": "https://raw.githubusercontent.com/verbb/bugsnag/craft-5/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/bugsnag/craft-6/CHANGELOG.md",
         "class": "verbb\\bugsnag\\Bugsnag"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
