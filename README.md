@@ -1,4 +1,4 @@
-<p align="center"><img src="https://verbb.imgix.net/plugins/bugsnag/bugsnag-icon.svg" width="100" height="100" alt="Bugsnag icon"></p>
+<p align="center"><img src="https://assets.verbb.io/plugins/bugsnag/bugsnag-icon.svg" width="100" height="100" alt="Bugsnag icon"></p>
 <h1 align="center">Bugsnag for Craft CMS</h1>
 
 Bugsnag is a Craft CMS plugin to log errors/exceptions to [Bugsnag](https://www.bugsnag.com/).
