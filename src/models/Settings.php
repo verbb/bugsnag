@@ -12,7 +12,7 @@ class Settings extends Model
     // Properties
     // =========================================================================
 
-    public bool $enabled = true;
+    public bool|string $enabled = true;
     public string $serverApiKey = '';
     public string $browserApiKey = '';
     public string $releaseStage = 'production';
@@ -79,9 +79,9 @@ class Settings extends Model
         return $data;
     }
 
-    public function getEnabled(): bool|string|null
+    public function getEnabled(): bool
     {
-        return App::parseEnv($this->enabled);
+        return App::parseBooleanEnv($this->enabled) ?? false;
     }
 
     public function getServerApiKey(): bool|string|null
