@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.2 - 2026-05-03
+
+### Fixed
+- Fix an error with `enabled` typing for plugin setting.
+
 ## 5.0.1 - 2025-07-18
 
 ### Changed
