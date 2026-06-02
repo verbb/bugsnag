@@ -3,8 +3,8 @@ namespace verbb\bugsnag\models;
 
 use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\helpers\Bot;
+use verbb\bugsnag\helpers\User as UserHelper;
 
-use Craft;
 use craft\base\Model;
 use craft\helpers\App;
 
@@ -24,6 +24,7 @@ class Settings extends Model
     public bool|string $ignoreBots = false;
     public array $blacklist = [];
     public array $metaData = [];
+    public mixed $user = true;
     public bool|string $logTargetEnabled = true;
     public array $logTargetLevels = ['error', 'warning'];
     public array $logTargetCategories = [];
@@ -85,12 +86,8 @@ class Settings extends Model
             $data['metadata'] = $this->getMetadata();
         }
 
-        if ($currentUser = Craft::$app->getUser()->getIdentity()) {
-            $data['user'] = [
-                'id' => $currentUser->id,
-                'name' => $currentUser->fullName,
-                'email' => $currentUser->email,
-            ];
+        if ($user = $this->getUser()) {
+            $data['user'] = $user;
         }
 
         return $data;
@@ -144,5 +141,10 @@ class Settings extends Model
     public function getMetadata(): array
     {
         return array_merge($this->metaData, Bugsnag::$plugin->getService()->metadata);
+    }
+
+    public function getUser(): array
+    {
+        return UserHelper::resolve($this->user);
     }
 }

@@ -3,10 +3,10 @@ namespace verbb\bugsnag\log;
 
 use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\helpers\Bot;
+use verbb\bugsnag\helpers\User as UserHelper;
 
 use Bugsnag\Client;
 
-use Craft;
 use craft\helpers\App;
 
 use Throwable;
@@ -26,6 +26,7 @@ class BugsnagTarget extends Target
     public array $filters = ['password'];
     public bool|string $ignoreBots = false;
     public array $metaData = [];
+    public mixed $user = true;
     public array $exceptCodes = [403, 404];
     public array $exceptPatterns = [];
     public bool $reportExceptions = false;
@@ -141,14 +142,8 @@ class BugsnagTarget extends Target
         $report->setSeverity($severity);
         $report->setMetaData($metadata);
 
-        $userComponent = Craft::$app->has('user', true) ? Craft::$app->get('user') : null;
-
-        if ($userComponent && method_exists($userComponent, 'getIdentity') && $user = $userComponent->getIdentity()) {
-            $report->setUser([
-                'id' => $user->id,
-                'name' => $user->getName(),
-                'email' => $user->email,
-            ]);
+        if ($user = UserHelper::resolve($this->user)) {
+            $report->setUser($user);
         }
     }
 

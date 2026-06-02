@@ -21,6 +21,7 @@ return [
         'commerceAutoMetadata' => false,
         'blacklist' => [],
         'metaData' => [],
+        'user' => true,
         'logTargetEnabled' => true,
         'logTargetLevels' => ['error', 'warning'],
         'logTargetCategories' => [],
@@ -46,6 +47,7 @@ return [
 - `commerceAutoMetadata` - Whether to automatically attach safe Craft Commerce order and transaction metadata to reports when Commerce is installed.
 - `blacklist` - A collection of handlers for excluding exceptions sent to Bugsnag.
 - `metaData` - Additional metadata sent to Bugsnag.
+- `user` - User metadata sent to Bugsnag. Set to `true` for the default Craft user data, `false` to disable user data, an array to map fields, or a callable to build a custom payload.
 - `logTargetEnabled` - Whether to register the Yii log target.
 - `logTargetLevels` - Yii log levels to send to Bugsnag. Defaults to `error` and `warning`.
 - `logTargetCategories` - Yii log categories to include. Leave empty to include all categories.
@@ -77,6 +79,44 @@ return [
     ],  
 ];
 ```
+
+### Customizing user metadata
+By default, Bugsnag receives the logged-in Craft user’s `id`, `name`, and `email`. You can customize this from `config/bugsnag.php`:
+
+```php
+<?php
+
+return [
+    'user' => [
+        'id' => 'id',
+        'name' => 'fullName',
+        'email' => 'email',
+        'companyId' => 'companyId',
+    ],
+];
+```
+
+The array values can be Craft user attributes, custom field handles, or callables that receive the current user:
+
+```php
+<?php
+
+return [
+    'user' => function($user) {
+        if (!$user) {
+            return [];
+        }
+
+        return [
+            'id' => $user->id,
+            'email' => $user->email,
+            'accountType' => $user->accountType,
+        ];
+    },
+];
+```
+
+Set `'user' => false` if you do not want Bugsnag reports to include user data.
 
 ## Control Panel
 You can also manage configuration settings through the Control Panel by visiting Settings → Bugsnag.

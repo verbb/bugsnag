@@ -37,6 +37,9 @@ return [
     // Metadata to send with every request
     'metaData' => [],
 
+    // User metadata to send with every request
+    'user' => true,
+
     // Blacklist certain exception types like 404s
     'blacklist' => [],
 

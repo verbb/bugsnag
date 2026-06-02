@@ -170,6 +170,7 @@ class Bugsnag extends Plugin
             'filters' => $settings->filters,
             'ignoreBots' => $settings->ignoreBots,
             'metaData' => $settings->getMetadata(),
+            'user' => $settings->user,
             'client' => $this->getService()->getClient(),
             'levels' => $settings->logTargetLevels,
             'categories' => $settings->logTargetCategories,

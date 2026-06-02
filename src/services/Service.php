@@ -4,7 +4,6 @@ namespace verbb\bugsnag\services;
 use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\models\Settings;
 
-use Craft;
 use craft\base\Component;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
@@ -48,12 +47,8 @@ class Service extends Component
                     $report->setMetaData($metadata);
                 }
 
-                if ($user = Craft::$app->getUser()->getIdentity()) {
-                    $report->setUser([
-                        'id' => $user->id,
-                        'name' => $user->getName(),
-                        'email' => $user->email,
-                    ]);
+                if ($user = $this->settings->getUser()) {
+                    $report->setUser($user);
                 }
             });
         }
