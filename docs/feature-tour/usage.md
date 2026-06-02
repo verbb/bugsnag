@@ -15,6 +15,7 @@ return [
 ];
 ```
 
+
 ## Using Bugsnag
 The Bugsnag plugin will automatically log most exceptions/errors. If you want to log an exceptions/error from a custom plugin, you may use the service methods:
 
@@ -57,4 +58,38 @@ You can trigger an exception from your templates.
 
 ```twig
 {% do craft.bugsnag.handleException('Something went terribly wrong.') %}
+```
+
+## Using the Yii log target
+The plugin automatically registers a Yii log target that sends Craft/Yii `error` and `warning` log messages to Bugsnag. This includes calls such as `Craft::error()` and `Craft::warning()`.
+
+Logged `Throwable` messages are not reported by the log target by default, because the plugin already reports exceptions through Craft’s error handler. If you want the log target to report logged exceptions too, enable the `logTargetReportExceptions` setting.
+
+### Advanced early registration
+For the earliest possible log capture, you can register the log target directly in `config/app.php`. This adds the target to Yii’s log component before Craft plugins and modules are loaded.
+
+```php
+<?php
+
+use craft\helpers\App;
+use verbb\bugsnag\log\BugsnagTarget;
+
+return [
+    'components' => [
+        'log' => [
+            'targets' => [
+                'bugsnag' => function() {
+                    return Craft::createObject([
+                        'class' => BugsnagTarget::class,
+                        'enabled' => App::env('CRAFT_ENVIRONMENT') !== 'dev',
+                        'serverApiKey' => App::env('BUGSNAG_SERVER_API_KEY'),
+                        'releaseStage' => App::env('CRAFT_ENVIRONMENT') ?: 'production',
+                        'levels' => ['error', 'warning'],
+                        'exceptCodes' => [403, 404],
+                    ]);
+                },
+            ],
+        ],
+    ],
+];
 ```

@@ -30,4 +30,25 @@ return [
 
     // Blacklist certain exception types like 404s
     'blacklist' => [],
+
+    // Enable the Yii log target for Craft/Yii errors and warnings
+    'logTargetEnabled' => true,
+
+    // Yii log levels to send to Bugsnag
+    'logTargetLevels' => ['error', 'warning'],
+
+    // Yii log categories to include
+    'logTargetCategories' => [],
+
+    // Yii log categories to exclude
+    'logTargetExcept' => [],
+
+    // HTTP status codes to exclude from the Yii log target
+    'logTargetExceptCodes' => [403, 404],
+
+    // Message text patterns to exclude from the Yii log target
+    'logTargetExceptPatterns' => [],
+
+    // Whether the Yii log target should report Throwable log messages
+    'logTargetReportExceptions' => false,
 ];

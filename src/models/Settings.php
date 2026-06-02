@@ -22,6 +22,13 @@ class Settings extends Model
     public array $filters = ['password'];
     public array $blacklist = [];
     public array $metaData = [];
+    public bool|string $logTargetEnabled = true;
+    public array $logTargetLevels = ['error', 'warning'];
+    public array $logTargetCategories = [];
+    public array $logTargetExcept = [];
+    public array $logTargetExceptCodes = [403, 404];
+    public array $logTargetExceptPatterns = [];
+    public bool $logTargetReportExceptions = false;
 
 
     // Public Methods
@@ -83,6 +90,11 @@ class Settings extends Model
     public function getEnabled(): bool
     {
         return App::parseBooleanEnv($this->enabled) ?? false;
+    }
+
+    public function getLogTargetEnabled(): bool
+    {
+        return App::parseBooleanEnv($this->logTargetEnabled) ?? false;
     }
 
     public function getServerApiKey(): bool|string|null

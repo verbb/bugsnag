@@ -18,6 +18,13 @@ return [
         'filters' => ['password'],
         'blacklist' => [],
         'metaData' => [],
+        'logTargetEnabled' => true,
+        'logTargetLevels' => ['error', 'warning'],
+        'logTargetCategories' => [],
+        'logTargetExcept' => [],
+        'logTargetExceptCodes' => [403, 404],
+        'logTargetExceptPatterns' => [],
+        'logTargetReportExceptions' => false,
     ],
 ];
 ```
@@ -33,6 +40,13 @@ return [
 - `filters` - Any data to filter from payloads sent to Bugsnag.
 - `blacklist` - A collection of handlers for excluding exceptions sent to Bugsnag.
 - `metaData` - Additional metadata sent to Bugsnag.
+- `logTargetEnabled` - Whether to register the Yii log target.
+- `logTargetLevels` - Yii log levels to send to Bugsnag. Defaults to `error` and `warning`.
+- `logTargetCategories` - Yii log categories to include. Leave empty to include all categories.
+- `logTargetExcept` - Yii log categories to exclude.
+- `logTargetExceptCodes` - HTTP status codes to exclude from the Yii log target.
+- `logTargetExceptPatterns` - Message text patterns to exclude from the Yii log target.
+- `logTargetReportExceptions` - Whether the Yii log target should also report logged `Throwable` messages. This is disabled by default to avoid duplicating the plugin’s exception-handler reports.
 
 ### Blacklisting exceptions
 If you want to ignore a certain type of exception, like a 404-error: 

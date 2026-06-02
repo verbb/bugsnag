@@ -2,6 +2,7 @@
 namespace verbb\bugsnag;
 
 use verbb\bugsnag\base\PluginTrait;
+use verbb\bugsnag\log\BugsnagTarget;
 use verbb\bugsnag\models\Settings;
 use verbb\bugsnag\variables\BugsnagVariable;
 
@@ -40,6 +41,7 @@ class Bugsnag extends Plugin
 
         self::$plugin = $this;
 
+        $this->_registerLogTarget();
         $this->_registerVariables();
         $this->_registerEventHandlers();
 
@@ -108,6 +110,37 @@ class Bugsnag extends Plugin
 
             $this->getService()->handleException($event->exception);
         });
+    }
+
+    private function _registerLogTarget(): void
+    {
+        $settings = $this->getSettings();
+
+        if (!$settings->getEnabled() || !$settings->getLogTargetEnabled() || empty($settings->getServerApiKey())) {
+            return;
+        }
+
+        $log = Craft::$app->getLog();
+
+        if (isset($log->targets['bugsnag'])) {
+            return;
+        }
+
+        $log->targets['bugsnag'] = Craft::createObject([
+            'class' => BugsnagTarget::class,
+            'serverApiKey' => $settings->getServerApiKey(),
+            'releaseStage' => $settings->getReleaseStage(),
+            'appVersion' => $settings->appVersion,
+            'notifyReleaseStages' => $settings->notifyReleaseStages,
+            'filters' => $settings->filters,
+            'metaData' => $settings->getMetadata(),
+            'levels' => $settings->logTargetLevels,
+            'categories' => $settings->logTargetCategories,
+            'except' => $settings->logTargetExcept,
+            'exceptCodes' => $settings->logTargetExceptCodes,
+            'exceptPatterns' => $settings->logTargetExceptPatterns,
+            'reportExceptions' => $settings->logTargetReportExceptions,
+        ]);
     }
 
 }
