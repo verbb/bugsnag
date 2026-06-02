@@ -15,6 +15,7 @@ class Settings extends Model
     public bool|string $enabled = true;
     public string $serverApiKey = '';
     public string $browserApiKey = '';
+    public string $browserCdnUrl = 'https://d2wy8f7a9ursnm.cloudfront.net/v7.0.0/bugsnag.min.js';
     public string $releaseStage = 'production';
     public string $appVersion = '';
     public array $notifyReleaseStages = ['production'];
@@ -92,6 +93,11 @@ class Settings extends Model
     public function getBrowserApiKey(): bool|string|null
     {
         return App::parseEnv($this->browserApiKey);
+    }
+
+    public function getBrowserCdnUrl(): bool|string|null
+    {
+        return App::parseEnv($this->browserCdnUrl);
     }
 
     public function getReleaseStage(): bool|string|null

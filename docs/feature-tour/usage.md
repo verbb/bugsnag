@@ -31,7 +31,7 @@ You can log JavaScript errors on your site, by including the following in your T
 {% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
 ```
 
-This currently uses v7.0.0 of the Bugsnag library. You also need to set the `browserApiKey` setting.
+This uses the `browserCdnUrl` setting, which defaults to v7.0.0 of the Bugsnag library. You also need to set the `browserApiKey` setting.
 
 If you'd rather include the Bugsnag client in your build and initialize it yourself, there is a helper method to get the browser config based on your plugin settings:
 

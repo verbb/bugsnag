@@ -54,6 +54,17 @@
 }) }}
 
 {{ forms.autosuggestField({
+    label: 'Browser CDN URL' | t('bugsnag'),
+    instructions: 'The CDN URL used to load the Bugsnag browser JavaScript library.' | t('bugsnag'),
+    id: 'browserCdnUrl',
+    name: 'browserCdnUrl',
+    value: settings.browserCdnUrl,
+    suggestEnvVars: true,
+    required: true,
+    warning: macros.configWarning('browserCdnUrl', 'bugsnag'),
+}) }}
+
+{{ forms.autosuggestField({
     label: 'Release stage' | t('bugsnag'),
     id: 'releaseStage',
     name: 'releaseStage',

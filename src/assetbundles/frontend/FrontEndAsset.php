@@ -21,10 +21,8 @@ class FrontEndAsset extends AssetBundle
             return;
         }
 
-        $filePath = 'https://d2wy8f7a9ursnm.cloudfront.net/v7.0.0/bugsnag.min.js';
-
         $this->js[] = [
-            $filePath,
+            $settings->getBrowserCdnUrl(),
             'position' => View::POS_HEAD,
         ];
 

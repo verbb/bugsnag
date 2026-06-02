@@ -10,6 +10,9 @@ return [
     // Project Browser API key
     'browserApiKey' => '',
 
+    // Bugsnag browser JavaScript CDN URL
+    'browserCdnUrl' => 'https://d2wy8f7a9ursnm.cloudfront.net/v7.0.0/bugsnag.min.js',
+
     // Release stage
     'releaseStage' => 'production',
 

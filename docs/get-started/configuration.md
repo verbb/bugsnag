@@ -11,6 +11,7 @@ return [
         'enabled' => true,
         'serverApiKey' => '',
         'browserApiKey' => '',
+        'browserCdnUrl' => 'https://d2wy8f7a9ursnm.cloudfront.net/v7.0.0/bugsnag.min.js',
         'releaseStage' => 'production',
         'appVersion' => '',
         'notifyReleaseStages' => ['production'],
@@ -25,6 +26,7 @@ return [
 - `enabled` - Whether to enable the Bugsnag plugin.
 - `serverApiKey` - The server API key for Bugsnag.
 - `browserApiKey` - The browser API key for Bugsnag.
+- `browserCdnUrl` - The CDN URL used to load the Bugsnag browser JavaScript library.
 - `releaseStage` - The release stage to send to Bugsnag.
 - `appVersion` - The app version to send to Bugsnag.
 - `notifyReleaseStages` - The release stages to send to Bugsnag.
