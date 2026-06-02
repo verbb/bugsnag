@@ -73,6 +73,16 @@
     warning: macros.configWarning('releaseStage', 'bugsnag'),
 }) }}
 
+{{ forms.booleanMenuField({
+    label: 'Ignore bots' | t('bugsnag'),
+    instructions: 'Prevent Bugsnag reports from known bots and crawlers.' | t('bugsnag'),
+    id: 'ignoreBots',
+    name: 'ignoreBots',
+    value: settings.ignoreBots,
+    includeEnvVars: true,
+    warning: macros.configWarning('ignoreBots', 'bugsnag'),
+}) }}
+
 {% set blacklistItems = settings.getBlacklist() %}
 
 {{ forms.editableTableField({

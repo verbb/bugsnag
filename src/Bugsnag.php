@@ -94,6 +94,10 @@ class Bugsnag extends Plugin
         Event::on(ErrorHandler::class, ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, function(ExceptionEvent $event) {
             $settings = $this->getSettings();
 
+            if ($settings->shouldIgnoreCurrentRequest()) {
+                return;
+            }
+
             foreach ($settings->blacklist as $config) {
                 if (isset($config['class'])) {
                     if (is_callable($config['class'])) {
@@ -133,6 +137,7 @@ class Bugsnag extends Plugin
             'appVersion' => $settings->appVersion,
             'notifyReleaseStages' => $settings->notifyReleaseStages,
             'filters' => $settings->filters,
+            'ignoreBots' => $settings->ignoreBots,
             'metaData' => $settings->getMetadata(),
             'levels' => $settings->logTargetLevels,
             'categories' => $settings->logTargetCategories,

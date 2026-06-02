@@ -25,6 +25,9 @@ return [
     // Sensitive attributes to filter out, like 'password'
     'filters' => [],
 
+    // Ignore exceptions and logs from known bots/crawlers
+    'ignoreBots' => false,
+
     // Metadata to send with every request
     'metaData' => [],
 

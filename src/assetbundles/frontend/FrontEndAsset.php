@@ -17,7 +17,7 @@ class FrontEndAsset extends AssetBundle
     {
         $settings = Bugsnag::$plugin->getSettings();
 
-        if (!$settings->getEnabled() || empty($settings->getBrowserApiKey())) {
+        if (!$settings->getEnabled() || empty($settings->getBrowserApiKey()) || $settings->shouldIgnoreCurrentRequest()) {
             return;
         }
 

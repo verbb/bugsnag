@@ -75,7 +75,7 @@ class Service extends Component
 
     public function handleException($exception): void
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabled() || $this->settings->shouldIgnoreCurrentRequest()) {
             return;
         }
 

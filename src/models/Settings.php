@@ -2,6 +2,7 @@
 namespace verbb\bugsnag\models;
 
 use verbb\bugsnag\Bugsnag;
+use verbb\bugsnag\helpers\Bot;
 
 use Craft;
 use craft\base\Model;
@@ -20,6 +21,7 @@ class Settings extends Model
     public string $appVersion = '';
     public array $notifyReleaseStages = ['production'];
     public array $filters = ['password'];
+    public bool|string $ignoreBots = false;
     public array $blacklist = [];
     public array $metaData = [];
     public bool|string $logTargetEnabled = true;
@@ -56,6 +58,11 @@ class Settings extends Model
         }
 
         return $isValid;
+    }
+
+    public function shouldIgnoreCurrentRequest(): bool
+    {
+        return $this->getIgnoreBots() && Bot::isCurrentRequestCrawler();
     }
 
     public function getBrowserConfig(): array
@@ -95,6 +102,11 @@ class Settings extends Model
     public function getLogTargetEnabled(): bool
     {
         return App::parseBooleanEnv($this->logTargetEnabled) ?? false;
+    }
+
+    public function getIgnoreBots(): bool
+    {
+        return App::parseBooleanEnv($this->ignoreBots) ?? false;
     }
 
     public function getServerApiKey(): bool|string|null

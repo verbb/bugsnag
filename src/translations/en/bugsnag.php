@@ -7,6 +7,8 @@ return [
   'Bugsnag' => 'Bugsnag',
   'Enabled' => 'Enabled',
   'Enable exception logging.' => 'Enable exception logging.',
+  'Ignore bots' => 'Ignore bots',
+  'Prevent Bugsnag reports from known bots and crawlers.' => 'Prevent Bugsnag reports from known bots and crawlers.',
   'Release stage' => 'Release stage',
   'Server API key' => 'Server API key',
   'The CDN URL used to load the Bugsnag browser JavaScript library.' => 'The CDN URL used to load the Bugsnag browser JavaScript library.',

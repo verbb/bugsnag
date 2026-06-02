@@ -1,9 +1,12 @@
 <?php
 namespace verbb\bugsnag\log;
 
+use verbb\bugsnag\helpers\Bot;
+
 use Bugsnag\Client;
 
 use Craft;
+use craft\helpers\App;
 
 use Throwable;
 
@@ -20,6 +23,7 @@ class BugsnagTarget extends Target
     public string $appVersion = '';
     public array $notifyReleaseStages = ['production'];
     public array $filters = ['password'];
+    public bool|string $ignoreBots = false;
     public array $metaData = [];
     public array $exceptCodes = [403, 404];
     public array $exceptPatterns = [];
@@ -67,7 +71,7 @@ class BugsnagTarget extends Target
 
     public function export(): void
     {
-        if (!$this->_bugsnag) {
+        if (!$this->_bugsnag || ($this->_getIgnoreBots() && Bot::isCurrentRequestCrawler())) {
             return;
         }
 
@@ -189,8 +193,8 @@ class BugsnagTarget extends Target
 
     private function _parseEnv(mixed $value): mixed
     {
-        if (is_string($value) && class_exists('\craft\helpers\App')) {
-            return \craft\helpers\App::parseEnv($value);
+        if (is_string($value)) {
+            return App::parseEnv($value);
         }
 
         return $value;
@@ -198,10 +202,11 @@ class BugsnagTarget extends Target
 
     private function _parseBooleanEnv(mixed $value): bool
     {
-        if (class_exists('\craft\helpers\App')) {
-            return \craft\helpers\App::parseBooleanEnv($value) ?? false;
-        }
+        return App::parseBooleanEnv($value) ?? false;
+    }
 
-        return (bool)$value;
+    private function _getIgnoreBots(): bool
+    {
+        return $this->_parseBooleanEnv($this->ignoreBots);
     }
 }
