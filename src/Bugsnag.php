@@ -44,6 +44,7 @@ class Bugsnag extends Plugin
         $this->_registerLogTarget();
         $this->_registerVariables();
         $this->_registerEventHandlers();
+        $this->_registerCommerceEventHandlers();
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
             $this->_registerCpRoutes();
@@ -116,6 +117,36 @@ class Bugsnag extends Plugin
         });
     }
 
+    private function _registerCommerceEventHandlers(): void
+    {
+        $settings = $this->getSettings();
+
+        if (!$settings->getEnabled() || (!$settings->getCommerceAutoBreadcrumbs() && !$settings->getCommerceAutoMetadata())) {
+            return;
+        }
+
+        $orderClass = 'craft\\commerce\\elements\\Order';
+        $transactionsClass = 'craft\\commerce\\services\\Transactions';
+
+        if (class_exists($orderClass)) {
+            $eventName = defined($orderClass . '::EVENT_AFTER_SAVE') ? constant($orderClass . '::EVENT_AFTER_SAVE') : 'afterSave';
+
+            Event::on($orderClass, $eventName, function(Event $event) {
+                $this->getService()->handleCommerceOrder($event->sender);
+            });
+        }
+
+        if (class_exists($transactionsClass)) {
+            $eventName = defined($transactionsClass . '::EVENT_AFTER_SAVE_TRANSACTION') ? constant($transactionsClass . '::EVENT_AFTER_SAVE_TRANSACTION') : 'afterSaveTransaction';
+
+            Event::on($transactionsClass, $eventName, function(Event $event) {
+                if (isset($event->transaction)) {
+                    $this->getService()->handleCommerceTransaction($event->transaction);
+                }
+            });
+        }
+    }
+
     private function _registerLogTarget(): void
     {
         $settings = $this->getSettings();
@@ -139,6 +170,7 @@ class Bugsnag extends Plugin
             'filters' => $settings->filters,
             'ignoreBots' => $settings->ignoreBots,
             'metaData' => $settings->getMetadata(),
+            'client' => $this->getService()->getClient(),
             'levels' => $settings->logTargetLevels,
             'categories' => $settings->logTargetCategories,
             'except' => $settings->logTargetExcept,

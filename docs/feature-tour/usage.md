@@ -25,6 +25,23 @@ use verbb\bugsnag\Bugsnag;
 Bugsnag::$plugin->getService()->handleException($exception);
 ```
 
+### Adding breadcrumbs
+Breadcrumbs are small events that Bugsnag shows alongside a report to help explain what happened before an error. You can leave a breadcrumb from PHP:
+
+```php
+use verbb\bugsnag\Bugsnag;
+
+Bugsnag::$plugin->getService()->breadcrumb('Payment authorized', 'manual', [
+    'orderId' => $order->id,
+]);
+```
+
+Or from Twig:
+
+```twig
+{% do craft.bugsnag.breadcrumb('Viewed checkout', 'manual', { orderId: cart.id }) %}
+```
+
 ## Using Bugsnag on the frontend
 You can log JavaScript errors on your site, by including the following in your Twig templates:
 
@@ -53,6 +70,17 @@ If you want to send custom metadata with your request, you may do something like
 
 Note that you have to call these methods before you include the JS bundle.
 
+### Adding browser breadcrumbs
+If you are using the browser JavaScript client, you can also leave browser-side breadcrumbs:
+
+```twig
+<script>
+    if (window.Bugsnag) {
+        Bugsnag.leaveBreadcrumb('Viewed checkout', { orderId: {{ cart.id | json_encode | raw }} }, 'manual');
+    }
+</script>
+```
+
 ### Throwing an exception from templates
 You can trigger an exception from your templates.
 
@@ -64,6 +92,11 @@ You can trigger an exception from your templates.
 The plugin automatically registers a Yii log target that sends Craft/Yii `error` and `warning` log messages to Bugsnag. This includes calls such as `Craft::error()` and `Craft::warning()`.
 
 Logged `Throwable` messages are not reported by the log target by default, because the plugin already reports exceptions through Craft’s error handler. If you want the log target to report logged exceptions too, enable the `logTargetReportExceptions` setting.
+
+## Using Craft Commerce breadcrumbs
+When Craft Commerce is installed, the plugin can automatically leave breadcrumbs for saved orders/carts and saved transactions. Enable the `commerceAutoBreadcrumbs` setting to leave breadcrumbs, and `commerceAutoMetadata` to attach safe order and transaction metadata to reports.
+
+The automatic Commerce metadata is intentionally conservative and avoids payment details, addresses, gateway responses, and other sensitive payloads. It includes identifiers and status-style fields such as order ID, order number/reference, customer/user ID, totals, currency, transaction type/status/code, and gateway ID.
 
 ### Advanced early registration
 For the earliest possible log capture, you can register the log target directly in `config/app.php`. This adds the target to Yii’s log component before Craft plugins and modules are loaded.

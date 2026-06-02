@@ -24,6 +24,11 @@ class BugsnagVariable
         return Bugsnag::$plugin->getService()->metadata($data);
     }
 
+    public function breadcrumb(string $text = '', string $type = 'manual', array $metaData = []): bool
+    {
+        return Bugsnag::$plugin->getService()->breadcrumb($text, $type, $metaData);
+    }
+
     public function getBrowserConfig($asJson = true): Markup|array
     {
         $config = Bugsnag::$plugin->getSettings()->getBrowserConfig();

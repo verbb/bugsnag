@@ -28,6 +28,12 @@ return [
     // Ignore exceptions and logs from known bots/crawlers
     'ignoreBots' => false,
 
+    // Automatically leave breadcrumbs for Craft Commerce orders and transactions
+    'commerceAutoBreadcrumbs' => false,
+
+    // Automatically attach safe Craft Commerce order and transaction metadata
+    'commerceAutoMetadata' => false,
+
     // Metadata to send with every request
     'metaData' => [],
 

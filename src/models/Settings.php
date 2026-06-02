@@ -31,6 +31,8 @@ class Settings extends Model
     public array $logTargetExceptCodes = [403, 404];
     public array $logTargetExceptPatterns = [];
     public bool $logTargetReportExceptions = false;
+    public bool|string $commerceAutoBreadcrumbs = false;
+    public bool|string $commerceAutoMetadata = false;
 
 
     // Public Methods
@@ -107,6 +109,16 @@ class Settings extends Model
     public function getIgnoreBots(): bool
     {
         return App::parseBooleanEnv($this->ignoreBots) ?? false;
+    }
+
+    public function getCommerceAutoBreadcrumbs(): bool
+    {
+        return App::parseBooleanEnv($this->commerceAutoBreadcrumbs) ?? false;
+    }
+
+    public function getCommerceAutoMetadata(): bool
+    {
+        return App::parseBooleanEnv($this->commerceAutoMetadata) ?? false;
     }
 
     public function getServerApiKey(): bool|string|null

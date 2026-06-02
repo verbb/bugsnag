@@ -1,6 +1,7 @@
 <?php
 namespace verbb\bugsnag\log;
 
+use verbb\bugsnag\Bugsnag;
 use verbb\bugsnag\helpers\Bot;
 
 use Bugsnag\Client;
@@ -28,6 +29,7 @@ class BugsnagTarget extends Target
     public array $exceptCodes = [403, 404];
     public array $exceptPatterns = [];
     public bool $reportExceptions = false;
+    public ?Client $client = null;
 
     private ?Client $_bugsnag = null;
 
@@ -53,13 +55,13 @@ class BugsnagTarget extends Target
 
         $apiKey = $this->_parseEnv($this->serverApiKey);
 
-        if (!$this->enabled || empty($apiKey)) {
+        if (!$this->enabled || (empty($apiKey) && !$this->client)) {
             $this->enabled = false;
 
             return;
         }
 
-        $this->_bugsnag = Client::make($apiKey);
+        $this->_bugsnag = $this->client ?? Client::make($apiKey);
         $this->_bugsnag->setReleaseStage($this->_parseEnv($this->releaseStage) ?: 'production');
         $this->_bugsnag->setAppVersion($this->_parseEnv($this->appVersion) ?: '');
         $this->_bugsnag->setNotifyReleaseStages($this->notifyReleaseStages);
@@ -127,7 +129,7 @@ class BugsnagTarget extends Target
 
     private function _customizeReport($report, array $message, string $category, string $levelName, string $severity): void
     {
-        $metadata = array_merge($this->metaData, [
+        $metadata = array_replace_recursive($this->metaData, Bugsnag::$plugin?->getService()->metadata ?? [], [
             'yiiLog' => [
                 'level' => $levelName,
                 'category' => $category,

@@ -65,7 +65,7 @@
 }) }}
 
 {{ forms.autosuggestField({
-    label: 'Release stage' | t('bugsnag'),
+    label: 'Release Stage' | t('bugsnag'),
     id: 'releaseStage',
     name: 'releaseStage',
     value: settings.releaseStage,
@@ -74,13 +74,33 @@
 }) }}
 
 {{ forms.booleanMenuField({
-    label: 'Ignore bots' | t('bugsnag'),
+    label: 'Ignore Bots' | t('bugsnag'),
     instructions: 'Prevent Bugsnag reports from known bots and crawlers.' | t('bugsnag'),
     id: 'ignoreBots',
     name: 'ignoreBots',
     value: settings.ignoreBots,
     includeEnvVars: true,
     warning: macros.configWarning('ignoreBots', 'bugsnag'),
+}) }}
+
+{{ forms.booleanMenuField({
+    label: 'Commerce Auto Breadcrumbs' | t('bugsnag'),
+    instructions: 'Automatically leave Bugsnag breadcrumbs for Craft Commerce orders and transactions when Commerce is installed.' | t('bugsnag'),
+    id: 'commerceAutoBreadcrumbs',
+    name: 'commerceAutoBreadcrumbs',
+    value: settings.commerceAutoBreadcrumbs,
+    includeEnvVars: true,
+    warning: macros.configWarning('commerceAutoBreadcrumbs', 'bugsnag'),
+}) }}
+
+{{ forms.booleanMenuField({
+    label: 'Commerce Auto Metadata' | t('bugsnag'),
+    instructions: 'Automatically attach safe Craft Commerce order and transaction metadata to Bugsnag reports when Commerce is installed.' | t('bugsnag'),
+    id: 'commerceAutoMetadata',
+    name: 'commerceAutoMetadata',
+    value: settings.commerceAutoMetadata,
+    includeEnvVars: true,
+    warning: macros.configWarning('commerceAutoMetadata', 'bugsnag'),
 }) }}
 
 {% set blacklistItems = settings.getBlacklist() %}

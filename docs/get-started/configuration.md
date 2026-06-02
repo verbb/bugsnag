@@ -16,6 +16,9 @@ return [
         'appVersion' => '',
         'notifyReleaseStages' => ['production'],
         'filters' => ['password'],
+        'ignoreBots' => false,
+        'commerceAutoBreadcrumbs' => false,
+        'commerceAutoMetadata' => false,
         'blacklist' => [],
         'metaData' => [],
         'logTargetEnabled' => true,
@@ -38,6 +41,9 @@ return [
 - `appVersion` - The app version to send to Bugsnag.
 - `notifyReleaseStages` - The release stages to send to Bugsnag.
 - `filters` - Any data to filter from payloads sent to Bugsnag.
+- `ignoreBots` - Whether to ignore exceptions and logs from known bots/crawlers.
+- `commerceAutoBreadcrumbs` - Whether to automatically leave breadcrumbs for Craft Commerce orders and transactions when Commerce is installed.
+- `commerceAutoMetadata` - Whether to automatically attach safe Craft Commerce order and transaction metadata to reports when Commerce is installed.
 - `blacklist` - A collection of handlers for excluding exceptions sent to Bugsnag.
 - `metaData` - Additional metadata sent to Bugsnag.
 - `logTargetEnabled` - Whether to register the Yii log target.
