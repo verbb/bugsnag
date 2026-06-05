@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.0.3 - 2026-06-05
+
+### Added
+- Add configurable Bugsnag user metadata payloads.
+- Add Bugsnag breadcrumbs and optional Commerce context capture.
+- Add bot filtering for Bugsnag reports.
+- Add a native Yii log target for sending Craft/Yii error and warning logs to Bugsnag.
+- Add a `browserCdnUrl` setting for customizing the Bugsnag browser JavaScript CDN URL.
+
 ## 5.0.2 - 2026-05-03
 
 ### Fixed
