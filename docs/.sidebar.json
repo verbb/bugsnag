@@ -19,7 +19,8 @@
         "title": "Template Guides",
         "collapsable": false,
         "children": [
-            "template-guides/available-variables"
+            "template-guides/adding-error-context",
+            "template-guides/configuring-browser-reporting"
         ]
     }
 ]

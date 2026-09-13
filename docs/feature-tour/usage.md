@@ -1,4 +1,16 @@
 # Usage
+
+Connect the plugin to your Bugsnag project using `serverApiKey` for PHP reporting and `browserApiKey` for browser reporting in [Configuration](docs:get-started/configuration). They serve different reporting paths; configuring one does not initialise the other.
+
+On a development installation, place this temporary call in a Twig template and load it once:
+
+```twig
+{% do craft.bugsnag.handleException('Documentation connection test') %}
+```
+
+Find that message in the intended Bugsnag project and check its environment and request context. Remove the call after testing. If it is missing, check the key and the plugin's reporting settings before adding further instrumentation.
+
+## Early PHP Reporting
 We recommend adding the following to your `config/app.php` file. This will capture early initialization errors.
 
 ```php
@@ -25,7 +37,7 @@ use verbb\bugsnag\Bugsnag;
 Bugsnag::$plugin->getService()->handleException($exception);
 ```
 
-### Adding breadcrumbs
+### Adding Breadcrumbs
 Breadcrumbs are small events that Bugsnag shows alongside a report to help explain what happened before an error. You can leave a breadcrumb from PHP:
 
 ```php
@@ -42,7 +54,7 @@ Or from Twig:
 {% do craft.bugsnag.breadcrumb('Viewed checkout', 'manual', { orderId: cart.id }) %}
 ```
 
-## Using Bugsnag on the frontend
+## Using Bugsnag on the Frontend
 You can log JavaScript errors on your site, by including the following in your Twig templates:
 
 ```twig
@@ -61,7 +73,7 @@ If you'd rather include the Bugsnag client in your build and initialize it yours
 
 The method takes one parameter, that toggles if it should return JSON or not.
 
-### Adding metadata from templates
+### Adding Metadata from Templates
 If you want to send custom metadata with your request, you may do something like this:
 
 ```twig
@@ -70,7 +82,7 @@ If you want to send custom metadata with your request, you may do something like
 
 Note that you have to call these methods before you include the JS bundle.
 
-### Adding browser breadcrumbs
+### Adding Browser Breadcrumbs
 If you are using the browser JavaScript client, you can also leave browser-side breadcrumbs:
 
 ```twig
@@ -81,24 +93,24 @@ If you are using the browser JavaScript client, you can also leave browser-side 
 </script>
 ```
 
-### Throwing an exception from templates
+### Throwing an Exception from Templates
 You can trigger an exception from your templates.
 
 ```twig
 {% do craft.bugsnag.handleException('Something went terribly wrong.') %}
 ```
 
-## Using the Yii log target
+## Using the Yii Log Target
 The plugin automatically registers a Yii log target that sends Craft/Yii `error` and `warning` log messages to Bugsnag. This includes calls such as `Craft::error()` and `Craft::warning()`.
 
 Logged `Throwable` messages are not reported by the log target by default, because the plugin already reports exceptions through Craft’s error handler. If you want the log target to report logged exceptions too, enable the `logTargetReportExceptions` setting.
 
-## Using Craft Commerce breadcrumbs
+## Using Craft Commerce Breadcrumbs
 When Craft Commerce is installed, the plugin can automatically leave breadcrumbs for saved orders/carts and saved transactions. Enable the `commerceAutoBreadcrumbs` setting to leave breadcrumbs, and `commerceAutoMetadata` to attach safe order and transaction metadata to reports.
 
 The automatic Commerce metadata is intentionally conservative and avoids payment details, addresses, gateway responses, and other sensitive payloads. It includes identifiers and status-style fields such as order ID, order number/reference, customer/user ID, totals, currency, transaction type/status/code, and gateway ID.
 
-### Advanced early registration
+### Advanced Early Registration
 For the earliest possible log capture, you can register the log target directly in `config/app.php`. This adds the target to Yii’s log component before Craft plugins and modules are loaded.
 
 ```php
