@@ -3,6 +3,8 @@
 
 Bugsnag is a Craft CMS plugin to log errors/exceptions to [Bugsnag](https://www.bugsnag.com/).
 
+It can report server exceptions, selected Craft/Yii log messages and browser errors, with breadcrumbs, configurable metadata, Craft Commerce context and filters for bots or sensitive payload values.
+
 ## Documentation
 Visit the [Bugsnag Plugin page](https://verbb.io/craft-plugins/bugsnag) for all documentation, guides, pricing and developer resources.
 
