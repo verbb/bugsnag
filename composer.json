@@ -1,6 +1,6 @@
 {
     "name": "verbb/bugsnag",
-    "description": "Log errors/exceptions to Bugsnag.",
+    "description": "A Craft CMS plugin for sending server and browser errors to Bugsnag.",
     "type": "craft-plugin",
     "version": "5.0.4",
     "keywords": [

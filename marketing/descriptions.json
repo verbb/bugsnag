@@ -1,0 +1,4 @@
+{
+    "marketplace": "Log errors and exceptions to Bugsnag.",
+    "repository": "A Craft CMS plugin for sending server and browser errors to Bugsnag."
+}
