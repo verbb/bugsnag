@@ -2,7 +2,7 @@
     "name": "verbb/bugsnag",
     "description": "A Craft CMS plugin for sending server and browser errors to Bugsnag.",
     "type": "craft-plugin",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "keywords": [
         "craft",
         "cms",
