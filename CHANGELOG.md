@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- Redact sensitive request context values before sending Yii log context to Bugsnag.
+
 ## 5.0.5 - 2026-09-30
 
 ### Changed

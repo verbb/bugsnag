@@ -7,10 +7,14 @@ use verbb\bugsnag\helpers\User as UserHelper;
 
 use Bugsnag\Client;
 
+use Craft;
 use craft\helpers\App;
+use craft\helpers\ArrayHelper;
 
 use Throwable;
 
+use yii\helpers\StringHelper;
+use yii\helpers\VarDumper;
 use yii\log\Logger;
 use yii\log\Target;
 
@@ -99,6 +103,37 @@ class BugsnagTarget extends Target
                 $this->_customizeReport($report, $message, $category, $levelName, $severity);
             });
         }
+    }
+
+
+    // Protected Methods
+    // =========================================================================
+
+    protected function getContextMessage(): string
+    {
+        $context = ArrayHelper::filter($GLOBALS, $this->logVars);
+
+        if (Craft::$app) {
+            $context = Craft::$app->getSecurity()->redactIfSensitive('', $context);
+        }
+
+        $items = ArrayHelper::flatten($context);
+
+        foreach ($this->maskVars as $var) {
+            foreach ($items as $key => $value) {
+                if (StringHelper::matchWildcard($var, $key, ['caseSensitive' => false])) {
+                    ArrayHelper::setValue($context, $key, '***');
+                }
+            }
+        }
+
+        $result = [];
+
+        foreach ($context as $key => $value) {
+            $result[] = "\${$key} = " . VarDumper::dumpAsString($value);
+        }
+
+        return implode("\n\n", $result);
     }
 
 
