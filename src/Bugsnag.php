@@ -107,7 +107,7 @@ class Bugsnag extends Plugin
                         if (!$result) {
                             return;
                         }
-                    } else if ($event->exception instanceof $config['class']) {
+                    } elseif ($event->exception instanceof $config['class']) {
                         return;
                     }
                 }
