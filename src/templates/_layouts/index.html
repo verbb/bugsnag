@@ -1,6 +1,6 @@
 {% extends parentLayout ?? '_layouts/cp' %}
 
-{% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\bugsnag\\BugsnagAsset') %}
+{% do view.registerAssetBundle('verbb\\bugsnag\\web\\assets\\cp\\BugsnagAsset') %}
 
 {% if title is not defined %}
     {% set title = craft.bugsnag.getPluginName() | t('bugsnag') %}

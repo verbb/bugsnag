@@ -58,7 +58,7 @@ Or from Twig:
 You can log JavaScript errors on your site, by including the following in your Twig templates:
 
 ```twig
-{% do view.registerAssetBundle('verbb\\bugsnag\\assetbundles\\frontend\\FrontEndAsset') %}
+{% do view.registerAssetBundle('verbb\\bugsnag\\web\\assets\\frontend\\FrontEndAsset') %}
 ```
 
 This uses the `browserCdnUrl` setting, which defaults to v7.0.0 of the Bugsnag library. You also need to set the `browserApiKey` setting.

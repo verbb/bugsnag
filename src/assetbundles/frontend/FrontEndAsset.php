@@ -1,36 +1,24 @@
 <?php
 namespace verbb\bugsnag\assetbundles\frontend;
 
-use verbb\bugsnag\Bugsnag;
+use verbb\bugsnag\web\assets\frontend\FrontEndAsset as NewFrontEndAsset;
 
 use Craft;
-use craft\helpers\Json;
-use craft\web\AssetBundle;
-use craft\web\View;
 
-class FrontEndAsset extends AssetBundle
+/**
+ * @deprecated Use {@see NewFrontEndAsset} instead.
+ */
+class FrontEndAsset extends NewFrontEndAsset
 {
     // Public Methods
     // =========================================================================
 
     public function init(): void
     {
-        $settings = Bugsnag::$plugin->getSettings();
-
-        if (!$settings->getEnabled() || empty($settings->getBrowserApiKey()) || $settings->shouldIgnoreCurrentRequest()) {
-            return;
-        }
-
-        $this->js[] = [
-            $settings->getBrowserCdnUrl(),
-            'position' => View::POS_HEAD,
-        ];
-
-        // Include this wrapper since bugsnag.js might be blocked by adblockers.  We don't want to completely die if so.
-        $encodedSettings = Json::encode($settings->getBrowserConfig());
-        $js = "Bugsnag.start({$encodedSettings});";
-
-        Craft::$app->getView()->registerJs($js, View::POS_HEAD);
+        Craft::$app->getDeprecator()->log(
+            self::class,
+            '`' . self::class . '` has been deprecated. Use `' . NewFrontEndAsset::class . '` instead.',
+        );
 
         parent::init();
     }
