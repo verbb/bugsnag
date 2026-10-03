@@ -23,7 +23,7 @@ return [
     'notifyReleaseStages' => ['production'],
 
     // Sensitive attributes to filter out, like 'password'
-    'filters' => [],
+    'filters' => ['password'],
 
     // Ignore exceptions and logs from known bots/crawlers
     'ignoreBots' => false,

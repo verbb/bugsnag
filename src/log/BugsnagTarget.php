@@ -70,7 +70,7 @@ class BugsnagTarget extends Target
             return;
         }
 
-        $this->_bugsnag = $this->client ?? Client::make($apiKey);
+        $this->_bugsnag = $this->client ?? Client::make($apiKey, null, false);
         $this->_bugsnag->setReleaseStage($this->_parseEnv($this->releaseStage) ?: 'production');
         $this->_bugsnag->setAppVersion($this->_parseEnv($this->appVersion) ?: '');
         $this->_bugsnag->setNotifyReleaseStages($this->notifyReleaseStages);

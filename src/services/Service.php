@@ -30,7 +30,7 @@ class Service extends Component
         $this->settings = Bugsnag::$plugin->getSettings();
 
         if ($this->isEnabled()) {
-            $this->bugsnag = Client::make($this->settings->getServerApiKey());
+            $this->bugsnag = Client::make($this->settings->getServerApiKey(), null, false);
 
             $this->bugsnag->setReleaseStage($this->settings->getReleaseStage());
             $this->bugsnag->setAppVersion($this->settings->appVersion);
