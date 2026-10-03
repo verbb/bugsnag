@@ -23,6 +23,10 @@ class BugsnagTarget extends Target
     // Properties
     // =========================================================================
 
+    /**
+     * Yii leaves this property untyped and otherwise defaults to all request, cookie, session and server globals.
+     */
+    public $logVars = [];
     public bool|string|null $serverApiKey = '';
     public string $releaseStage = 'production';
     public string $appVersion = '';
