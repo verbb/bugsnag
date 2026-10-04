@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 5.0.7 - 2026-10-05
 
 ### Fixed
 - Fixed two medium-severity information disclosure vulnerabilities.
