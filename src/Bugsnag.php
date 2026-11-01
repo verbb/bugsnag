@@ -164,7 +164,7 @@ class Bugsnag extends Plugin
         $log->targets['bugsnag'] = Craft::createObject([
             'class' => BugsnagTarget::class,
             'serverApiKey' => $settings->getServerApiKey(),
-            'releaseStage' => $settings->getReleaseStage(),
+            'releaseStage' => $settings->getReleaseStage() ?: 'production',
             'appVersion' => $settings->appVersion,
             'notifyReleaseStages' => $settings->notifyReleaseStages,
             'filters' => $settings->filters,
