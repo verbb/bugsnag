@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 5.0.8 - 2026-11-01
 
 ### Fixed
 - Fixed an error on every request when the release stage uses an environment variable that isn't set.
