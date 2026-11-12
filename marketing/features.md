@@ -5,7 +5,7 @@ Bugsnag connects Craft’s server and browser errors to the error-monitoring wor
 <!-- feature-section -->
 ## Errors with context
 
-An error report that only says something broke is barely a head start. Send Craft exceptions and selected log messages to Bugsnag with the release, request and user context needed to understand where the problem happened, while filters keep noisy or sensitive values out of the payload.
+An error report that only says something broke is barely a head start. Send Craft exceptions and log messages to Bugsnag with the context needed to understand where the problem happened.
 
 <!-- feature-section-end -->
 
@@ -17,7 +17,7 @@ An error report that only says something broke is barely a head start. Send Craf
 <!-- feature-grid-end -->
 
 <!-- feature-section -->
-## Follow the trail
+## See what led up to each error
 
 See the path that led to a failure, not only the final exception. Browser reporting catches front-end JavaScript errors, breadcrumbs record important events from PHP or Twig, and optional Commerce context adds useful order and transaction identifiers without including payment or address details.
 <!-- feature-section-end -->

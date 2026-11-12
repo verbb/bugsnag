@@ -15,16 +15,20 @@ An error report that only says something broke is barely a head start. Send Craf
 - Set release stages, application versions, user data, and ignored traffic per project.
 
 ## Documentation
+
 Visit the [Bugsnag Plugin page](https://verbb.io/craft-plugins/bugsnag) for all documentation, guides, pricing and developer resources.
 
 ## Credit & Thanks
+
 Originally created by the team at [Superbig](https://superbig.co/).
 
 ## Support
-Get in touch with us via the [Bugsnag Support page](https://verbb.io/craft-plugins/bugsnag/support) or by [creating a Github issue](https://github.com/verbb/bugsnag/issues)
+
+Get in touch with us via the [Bugsnag Support page](https://verbb.io/craft-plugins/bugsnag/support) or by [creating a GitHub issue](https://github.com/verbb/bugsnag/issues).
 
 ## Sponsor
-Bugsnag is licensed under the MIT license, meaning it will always be free and open source - we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
+
+Bugsnag is licensed under the MIT license, so it will always be free and open source. If you'd like to support it anyway, you can [sponsor its development](https://github.com/sponsors/verbb).
 
 <h2></h2>
 
